@@ -8,23 +8,56 @@
 
 /* Begin PBXBuildFile section */
 		134062901E8E4B3E00D888C4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1340628F1E8E4B3E00D888C4 /* main.m */; };
+		134062961E8E4E8800D888C4 /* lsd in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1340628C1E8E4B3E00D888C4 /* lsd */; };
+		134062991E8E65EB00D888C4 /* YGCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062981E8E65EB00D888C4 /* YGCommand.m */; };
+		134062A21E8E66E200D888C4 /* YGPrintLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062A11E8E66E200D888C4 /* YGPrintLine.m */; };
+		134062A51E8E6B3E00D888C4 /* YGApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062A41E8E6B3E00D888C4 /* YGApplication.m */; };
+		134062A81E8E6DE000D888C4 /* YGConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062A71E8E6DE000D888C4 /* YGConfig.m */; };
+		134062AB1E8E6DF800D888C4 /* YGPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062AA1E8E6DF800D888C4 /* YGPreferences.m */; };
+		134062B21E8E717600D888C4 /* YGOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062B11E8E717500D888C4 /* YGOptions.m */; };
+		134062D21E8E83EE00D888C4 /* YGPrintVertical.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062D11E8E83EE00D888C4 /* YGPrintVertical.m */; };
+		134062D81E8E844600D888C4 /* YGPrintVerticalSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 134062D71E8E844600D888C4 /* YGPrintVerticalSize.m */; };
+		13CFA5961E8EE89E00FC93C6 /* YGDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */; };
+		13CFA59A1E8EEA2E00FC93C6 /* YGDirectorySorter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CFA5991E8EEA2E00FC93C6 /* YGDirectorySorter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1340628A1E8E4B3E00D888C4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 12;
+			dstPath = /usr/local/bin;
 			dstSubfolderSpec = 0;
 			files = (
+				134062961E8E4E8800D888C4 /* lsd in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1340628C1E8E4B3E00D888C4 /* lsd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lsd; sourceTree = BUILT_PRODUCTS_DIR; };
 		1340628F1E8E4B3E00D888C4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		134062971E8E65EB00D888C4 /* YGCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGCommand.h; sourceTree = "<group>"; };
+		134062981E8E65EB00D888C4 /* YGCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGCommand.m; sourceTree = "<group>"; };
+		134062A01E8E66E200D888C4 /* YGPrintLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGPrintLine.h; sourceTree = "<group>"; };
+		134062A11E8E66E200D888C4 /* YGPrintLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGPrintLine.m; sourceTree = "<group>"; };
+		134062A31E8E6B3E00D888C4 /* YGApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGApplication.h; sourceTree = "<group>"; };
+		134062A41E8E6B3E00D888C4 /* YGApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGApplication.m; sourceTree = "<group>"; };
+		134062A61E8E6DE000D888C4 /* YGConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGConfig.h; sourceTree = "<group>"; };
+		134062A71E8E6DE000D888C4 /* YGConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGConfig.m; sourceTree = "<group>"; };
+		134062A91E8E6DF800D888C4 /* YGPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGPreferences.h; sourceTree = "<group>"; };
+		134062AA1E8E6DF800D888C4 /* YGPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGPreferences.m; sourceTree = "<group>"; };
+		134062B01E8E717500D888C4 /* YGOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGOptions.h; sourceTree = "<group>"; };
+		134062B11E8E717500D888C4 /* YGOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGOptions.m; sourceTree = "<group>"; };
+		134062CC1E8E779700D888C4 /* defineConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defineConstants.h; sourceTree = "<group>"; };
+		134062D01E8E83EE00D888C4 /* YGPrintVertical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGPrintVertical.h; sourceTree = "<group>"; };
+		134062D11E8E83EE00D888C4 /* YGPrintVertical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGPrintVertical.m; sourceTree = "<group>"; };
+		134062D61E8E844600D888C4 /* YGPrintVerticalSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGPrintVerticalSize.h; sourceTree = "<group>"; };
+		134062D71E8E844600D888C4 /* YGPrintVerticalSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGPrintVerticalSize.m; sourceTree = "<group>"; };
+		13CFA5941E8EE89E00FC93C6 /* YGDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGDirectory.h; sourceTree = "<group>"; };
+		13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGDirectory.m; sourceTree = "<group>"; };
+		13CFA5981E8EEA2E00FC93C6 /* YGDirectorySorter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGDirectorySorter.h; sourceTree = "<group>"; };
+		13CFA5991E8EEA2E00FC93C6 /* YGDirectorySorter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGDirectorySorter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +91,37 @@
 			isa = PBXGroup;
 			children = (
 				1340628F1E8E4B3E00D888C4 /* main.m */,
+				134062A31E8E6B3E00D888C4 /* YGApplication.h */,
+				134062A41E8E6B3E00D888C4 /* YGApplication.m */,
+				134062971E8E65EB00D888C4 /* YGCommand.h */,
+				134062981E8E65EB00D888C4 /* YGCommand.m */,
+				134062A01E8E66E200D888C4 /* YGPrintLine.h */,
+				134062A11E8E66E200D888C4 /* YGPrintLine.m */,
+				134062D01E8E83EE00D888C4 /* YGPrintVertical.h */,
+				134062D11E8E83EE00D888C4 /* YGPrintVertical.m */,
+				134062D61E8E844600D888C4 /* YGPrintVerticalSize.h */,
+				134062D71E8E844600D888C4 /* YGPrintVerticalSize.m */,
+				13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */,
+				13CFA5941E8EE89E00FC93C6 /* YGDirectory.h */,
+				13CFA5981E8EEA2E00FC93C6 /* YGDirectorySorter.h */,
+				13CFA5991E8EEA2E00FC93C6 /* YGDirectorySorter.m */,
+				13CFA5971E8EE9A000FC93C6 /* Tools */,
 			);
 			path = lsd;
+			sourceTree = "<group>";
+		};
+		13CFA5971E8EE9A000FC93C6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				134062A91E8E6DF800D888C4 /* YGPreferences.h */,
+				134062AA1E8E6DF800D888C4 /* YGPreferences.m */,
+				134062B01E8E717500D888C4 /* YGOptions.h */,
+				134062B11E8E717500D888C4 /* YGOptions.m */,
+				134062A61E8E6DE000D888C4 /* YGConfig.h */,
+				134062A71E8E6DE000D888C4 /* YGConfig.m */,
+				134062CC1E8E779700D888C4 /* defineConstants.h */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,7 +182,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				134062B21E8E717600D888C4 /* YGOptions.m in Sources */,
+				13CFA59A1E8EEA2E00FC93C6 /* YGDirectorySorter.m in Sources */,
+				134062D21E8E83EE00D888C4 /* YGPrintVertical.m in Sources */,
+				134062AB1E8E6DF800D888C4 /* YGPreferences.m in Sources */,
+				134062A51E8E6B3E00D888C4 /* YGApplication.m in Sources */,
 				134062901E8E4B3E00D888C4 /* main.m in Sources */,
+				134062991E8E65EB00D888C4 /* YGCommand.m in Sources */,
+				134062D81E8E844600D888C4 /* YGPrintVerticalSize.m in Sources */,
+				134062A21E8E66E200D888C4 /* YGPrintLine.m in Sources */,
+				13CFA5961E8EE89E00FC93C6 /* YGDirectory.m in Sources */,
+				134062A81E8E6DE000D888C4 /* YGConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +323,7 @@
 				134062951E8E4B3E00D888C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
