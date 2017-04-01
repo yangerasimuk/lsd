@@ -9,6 +9,7 @@
 #import "YGPrintVertical.h"
 #import "YGDirectory.h"
 #import "YGDirectorySorter.h"
+#import "defineConstants.h"
 
 @interface YGPrintVertical()
 + (NSString *)sizeInHumanView:(NSUInteger)size;
@@ -74,7 +75,7 @@
     NSString *dateStringHumanView = @"";
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:kPrintVerticalDateFormatSystem];
     
     
     for(YGDirectory *dir in sortedDirs){
@@ -87,7 +88,11 @@
             dateStringHumanView = [YGPrintVertical dateInHumanView:dir.modified];
         }
 
-        [resultString appendFormat:@"\n%@\t %@ | %@", [YGPrintVertical alignDir:dir.name maxDirNameLength:maxDirNameLength], dateString, dateStringHumanView];
+        [resultString appendFormat:@"\n%@%@%@ | %@", \
+         [YGPrintVertical alignDir:dir.name maxDirNameLength:maxDirNameLength], \
+         kPrintVerticalExtendedGap,
+         dateString, \
+         dateStringHumanView];
     }
     
     return [resultString copy];
@@ -129,8 +134,9 @@
     
     for(YGDirectory *dir in sortedDirs){
 
-        [resultString appendFormat:@"\n%@\t %@", \
+        [resultString appendFormat:@"\n%@%@%@", \
          [YGPrintVertical alignDir:dir.name maxDirNameLength:maxDirNameLength], \
+         kPrintVerticalExtendedGap,
          [YGPrintVertical alignSize:[YGPrintVertical sizeInHumanView:dir.size] maxSeparatorIndex:maxSizeLengthToSeparator]];
     }
     
@@ -177,54 +183,12 @@
     return [resultString copy];
 }
 
-/*
-+ (NSString *)alignDir:(NSString *)dirName maxDirNameLength:(NSUInteger)maxDirNameLength size:(NSString *)sizeString maxSeparatorIndex:(NSUInteger)maxSeparatorIndex {
-    
-    NSMutableString *resultString = [[NSMutableString alloc] init];
-    
-    NSUInteger nameGap = maxDirNameLength - [dirName length];
-    
-    if(nameGap != 0){
-        [resultString appendFormat:@"%@", dirName];
-        for(NSUInteger i = nameGap; i > 0; i--)
-            [resultString appendString:@" "];
-        [resultString appendString:@"\t  "];
-    }
-    else
-        [resultString appendFormat:@"%@\t  ", dirName];
-    
-
-    NSRange range = [sizeString rangeOfString:@"|"];
-    NSUInteger indexGap = 0;
-    
-    if(range.location != NSNotFound){
-        indexGap = maxSeparatorIndex - range.location;
-    }
-    else{
-        indexGap = maxSeparatorIndex - 1;
-    }
-    
-    
-    if(indexGap != 0){
-        for(NSUInteger i = indexGap; i > 0; i--){
-            [resultString appendString:@" "];
-        }
-        [resultString appendFormat:@"%@", sizeString];
-        //        NSLog(@"3");
-    }
-    else{
-        [resultString appendFormat:@"%@", sizeString];
-    }
-    
-    return [resultString copy];
-}
-*/
 + (NSString *)sizeInHumanView:(NSUInteger)size{
     
     NSString *resultString = @"";
     NSUInteger leadNum = 0, trailNum = 0, abbIndex = 0;
     
-    NSArray *abbSize = @[@"B", @"KB", @"MB", @"GB", @"TB"];
+    NSArray *abbSize = kPrintVerticalFileSizes;
     
     NSMutableString *stringNum = [[NSMutableString alloc] init];
     NSMutableString *stringNumAll = [[NSMutableString alloc] init];

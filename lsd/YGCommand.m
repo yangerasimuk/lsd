@@ -9,7 +9,6 @@
 #import "YGCommand.h"
 #import "YGPrintLine.h"
 #import "YGPrintVertical.h"
-#import "YGPrintVerticalSize.h"
 
 @implementation YGCommand
 

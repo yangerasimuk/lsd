@@ -9,6 +9,7 @@
 #import "YGPrintLine.h"
 #import "YGDirectory.h"
 #import "YGDirectorySorter.h"
+#import "defineConstants.h"
 
 @implementation YGPrintLine
 
@@ -46,7 +47,7 @@
     
     printf("\n");
     for(YGDirectory *dir in sortedDirs){
-        printf("%s    ", [dir.name UTF8String]);
+        printf(kPrintLineGap, [dir.name UTF8String]);
     }
 }
 

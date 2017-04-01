@@ -7,3 +7,8 @@
 //
 
 #define kLsdConfigName @".lsd.config.xml"
+
+#define kPrintLineGap "%s    "
+#define kPrintVerticalExtendedGap @"\t "
+#define kPrintVerticalFileSizes @[@"B", @"KB", @"MB", @"GB", @"TB"]
+#define kPrintVerticalDateFormatSystem @"yyyy-MM-dd HH:mm:ss"

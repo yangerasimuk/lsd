@@ -90,14 +90,22 @@
 				1340628F1E8E4B3E00D888C4 /* main.m */,
 				134062A31E8E6B3E00D888C4 /* YGApplication.h */,
 				134062A41E8E6B3E00D888C4 /* YGApplication.m */,
+				13CFA59B1E8EFFFE00FC93C6 /* Commands */,
+				13BECD221E90420500A62028 /* Directories */,
+				13CFA5971E8EE9A000FC93C6 /* Tools */,
+			);
+			path = lsd;
+			sourceTree = "<group>";
+		};
+		13BECD221E90420500A62028 /* Directories */ = {
+			isa = PBXGroup;
+			children = (
 				13CFA5941E8EE89E00FC93C6 /* YGDirectory.h */,
 				13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */,
 				13CFA5981E8EEA2E00FC93C6 /* YGDirectorySorter.h */,
 				13CFA5991E8EEA2E00FC93C6 /* YGDirectorySorter.m */,
-				13CFA59B1E8EFFFE00FC93C6 /* Commands */,
-				13CFA5971E8EE9A000FC93C6 /* Tools */,
 			);
-			path = lsd;
+			name = Directories;
 			sourceTree = "<group>";
 		};
 		13CFA5971E8EE9A000FC93C6 /* Tools */ = {

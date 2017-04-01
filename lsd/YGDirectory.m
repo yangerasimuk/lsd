@@ -67,9 +67,9 @@
                 NSDictionary *attr = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@", fsObjectPath] error:&error];
                 
                 //NSLog(@"%@", [attr valueForKey:@"NSFileSize"]);
-                NSUInteger size = (unsigned long long)[attr valueForKey:@"NSFileSize"];
+                //NSUInteger size = (unsigned long long)[attr valueForKey:@"NSFileSize"];
                 
-                NSNumber *number = [NSNumber numberWithLong:@0];
+                NSNumber *number = [NSNumber numberWithLong:0];
                 number = [attr valueForKey:@"NSFileSize"];
                 acc += [number longLongValue]; //[attr valueForKey:@"NSFileSize"];
                 
