@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YGOptions.h"
 
 @interface YGDirectory : NSObject
 
+- (instancetype) initWithName:(NSString *)name atPath:(NSString *)path sortBy:(YGOptionSortBy)sortBy;
 - (instancetype) initWithName:(NSString *)name atPath:(NSString *)path;
 - (instancetype) initWithName:(NSString *)name;
 

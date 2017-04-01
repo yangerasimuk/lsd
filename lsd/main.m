@@ -13,7 +13,7 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        
+                
         // singleton
         YGApplication *app = [YGApplication sharedInstance];
         

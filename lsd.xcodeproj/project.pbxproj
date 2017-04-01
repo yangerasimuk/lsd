@@ -93,18 +93,11 @@
 				1340628F1E8E4B3E00D888C4 /* main.m */,
 				134062A31E8E6B3E00D888C4 /* YGApplication.h */,
 				134062A41E8E6B3E00D888C4 /* YGApplication.m */,
-				134062971E8E65EB00D888C4 /* YGCommand.h */,
-				134062981E8E65EB00D888C4 /* YGCommand.m */,
-				134062A01E8E66E200D888C4 /* YGPrintLine.h */,
-				134062A11E8E66E200D888C4 /* YGPrintLine.m */,
-				134062D01E8E83EE00D888C4 /* YGPrintVertical.h */,
-				134062D11E8E83EE00D888C4 /* YGPrintVertical.m */,
-				134062D61E8E844600D888C4 /* YGPrintVerticalSize.h */,
-				134062D71E8E844600D888C4 /* YGPrintVerticalSize.m */,
-				13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */,
 				13CFA5941E8EE89E00FC93C6 /* YGDirectory.h */,
+				13CFA5951E8EE89E00FC93C6 /* YGDirectory.m */,
 				13CFA5981E8EEA2E00FC93C6 /* YGDirectorySorter.h */,
 				13CFA5991E8EEA2E00FC93C6 /* YGDirectorySorter.m */,
+				13CFA59B1E8EFFFE00FC93C6 /* Commands */,
 				13CFA5971E8EE9A000FC93C6 /* Tools */,
 			);
 			path = lsd;
@@ -122,6 +115,21 @@
 				134062CC1E8E779700D888C4 /* defineConstants.h */,
 			);
 			name = Tools;
+			sourceTree = "<group>";
+		};
+		13CFA59B1E8EFFFE00FC93C6 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				134062971E8E65EB00D888C4 /* YGCommand.h */,
+				134062981E8E65EB00D888C4 /* YGCommand.m */,
+				134062A01E8E66E200D888C4 /* YGPrintLine.h */,
+				134062A11E8E66E200D888C4 /* YGPrintLine.m */,
+				134062D01E8E83EE00D888C4 /* YGPrintVertical.h */,
+				134062D11E8E83EE00D888C4 /* YGPrintVertical.m */,
+				134062D61E8E844600D888C4 /* YGPrintVerticalSize.h */,
+				134062D71E8E844600D888C4 /* YGPrintVerticalSize.m */,
+			);
+			name = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

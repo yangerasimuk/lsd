@@ -13,9 +13,9 @@
 @implementation YGPrintLine
 
 - (instancetype)initWithOptions:(YGOptions *)options{
-    self = [super init];
+    self = [super initWithOptions:options];
     if(self){
-        _options = options;
+        ;
     }
     return self;
 }
@@ -34,16 +34,19 @@
         [de skipDescendants];
         
         if([fm fileExistsAtPath:fsObject isDirectory:&isDir] && isDir){
-            YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir];
+            
+            // lazy init - create directory properties only defined in SortBy option (+name)
+            YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir sortBy:self.options.sortBy];
+                        
             [dirs addObject:dir];
         }
-        
     }
     
-    NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:_options.sortBy inDirection:_options.sortDirection]];
+    NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
     
+    printf("\n");
     for(YGDirectory *dir in sortedDirs){
-        printf("%s\t\t", [dir.name UTF8String]);
+        printf("%s    ", [dir.name UTF8String]);
     }
 }
 

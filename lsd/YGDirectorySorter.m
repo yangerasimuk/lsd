@@ -10,6 +10,10 @@
 
 @implementation YGDirectorySorter
 
+/**
+ 
+ Names compare in lowercase.
+ */
 + (NSArray<YGDirectory *> *)sort:(NSArray<YGDirectory *> *)dirs byOrder:(YGOptionSortBy)sortBy inDirection:(YGOptionSortDirection)sortDirection{
     
     NSArray<YGDirectory *> *directories = [[NSArray alloc] init];
@@ -17,28 +21,82 @@
         
         if(sortBy == YGOptionSortByName){
             if(sortDirection == YGOptionSortDirectionAscending){
-                if([obj1.name compare:obj2.name] == NSOrderedAscending)
+                if([[obj1.name lowercaseString] compare:[obj2.name lowercaseString]] == NSOrderedAscending)
                     return NSOrderedAscending;
-                else if([obj1.name compare:obj2.name] == NSOrderedDescending)
+                else if([[obj1.name lowercaseString] compare:[obj2.name lowercaseString]] == NSOrderedDescending)
                     return NSOrderedDescending;
                 else
                     return NSOrderedSame;
             }
             else{
-                if([obj1.name compare:obj2.name] == NSOrderedAscending)
+                if([[obj1.name lowercaseString] compare:[obj2.name lowercaseString]] == NSOrderedAscending)
                     return NSOrderedDescending;
-                else if([obj1.name compare:obj2.name] == NSOrderedDescending)
+                else if([[obj1.name lowercaseString] compare:[obj2.name lowercaseString]] == NSOrderedDescending)
                     return NSOrderedAscending;
                 else
                     return NSOrderedSame;
 
             }
         }
+        else if(sortBy == YGOptionSortByCreated){
+            if(sortDirection == YGOptionSortDirectionAscending){
+                if([obj1.created compare:obj2.created] == NSOrderedAscending)
+                    return NSOrderedAscending;
+                else if([obj1.created compare:obj2.created] == NSOrderedDescending)
+                    return NSOrderedDescending;
+                else
+                    return NSOrderedSame;
+            }
+            else{
+                if([obj1.created compare:obj2.created] == NSOrderedAscending)
+                    return NSOrderedDescending;
+                else if([obj1.created compare:obj2.created] == NSOrderedDescending)
+                    return NSOrderedAscending;
+                else
+                    return NSOrderedSame;
+            }
+        }
+        else if(sortBy == YGOptionSortByModified){
+            if(sortDirection == YGOptionSortDirectionAscending){
+                if([obj1.modified compare:obj2.modified] == NSOrderedAscending)
+                    return NSOrderedAscending;
+                else if([obj1.modified compare:obj2.modified] == NSOrderedDescending)
+                    return NSOrderedDescending;
+                else
+                    return NSOrderedSame;
+            }
+            else{
+                if([obj1.modified compare:obj2.modified] == NSOrderedAscending)
+                    return NSOrderedDescending;
+                else if([obj1.modified compare:obj2.modified] == NSOrderedDescending)
+                    return NSOrderedAscending;
+                else
+                    return NSOrderedSame;
+            }
+            
+        }
+        else if(sortBy == YGOptionSortBySize){
+            if(sortDirection == YGOptionSortDirectionAscending){
+                if(obj1.size < obj2.size)
+                    return NSOrderedAscending;
+                else if(obj1.size > obj2.size)
+                    return NSOrderedDescending;
+                else
+                    return NSOrderedSame;
+            }
+            else{
+                if(obj1.size > obj2.size)
+                    return NSOrderedAscending;
+                else if(obj1.size < obj2.size)
+                    return NSOrderedDescending;
+                else
+                    return NSOrderedSame;
+            }
+        }
         else
             return NSOrderedSame;
         
     }];
-    
     
     return directories;
 }

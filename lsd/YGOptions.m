@@ -13,7 +13,7 @@
 /**
  Basic init for options
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode{
     
     self = [super init];
     if(self){
@@ -21,6 +21,7 @@
         _sortBy = sortBy;
         _sortDirection = sortDireciton;
         _showHideDirs = showHideDirs;
+        _showMode = showMode;
     }
     return self;
 }
@@ -35,9 +36,11 @@
  - sortDirection: sort in ascending mode
  
  - showHideDirs: do not show hide directories
+ 
+ - showMode: basic mode without extended info (dates or size)
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionAscending showHideDirs:YGOptionShowHideDirsNO];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showHideDirs:YGOptionShowHideDirsNO showMode:YGOptionShowModeBasic];
 }
 
 - (NSString *)description{
@@ -48,8 +51,6 @@
         [result appendString:@"print in line"];
     else if(_printType == YGOptionPrintTypeVertical)
         [result appendString:@"print vertical"];
-    else if(_printType == YGOptionPrintTypeVerticalSize)
-        [result appendString:@"print vertical with size"];
     
     [result appendString:@" | SortBy: "];
     if(_sortBy == YGOptionSortByName)
@@ -72,7 +73,13 @@
         [result appendString:@"no"];
     if(_showHideDirs == YGOptionShowHideDirsYES)
         [result appendString:@"yes"];
-    
+
+    [result appendString:@" | ShowMode: "];
+    if(_showMode == YGOptionShowModeBasic)
+        [result appendString:@"basic"];
+    if(_showMode == YGOptionShowModeExtended)
+        [result appendString:@"extended"];
+
     return [result copy];
 }
 

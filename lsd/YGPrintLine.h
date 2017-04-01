@@ -13,6 +13,4 @@
 - (instancetype)initWithOptions:(YGOptions *)options;
 - (void)print;
 
-@property YGOptions *options;
-
 @end

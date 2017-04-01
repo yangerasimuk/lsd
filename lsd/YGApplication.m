@@ -36,8 +36,8 @@
 
 
 - (void) defineOptions:(NSString *)args{
-#ifndef FUNC_DEBUG
-#define FUNC_DEBUG
+#ifdef FUNC_DEBUG
+#undef FUNC_DEBUG
 #endif
     
 #ifdef FUNC_DEBUG
@@ -61,8 +61,8 @@
             else if(ch == 'v'){ // printColomn // vertical
                 _options.printType = YGOptionPrintTypeVertical;
             }
-            else if(ch == 's'){ // printSize
-                _options.printType = YGOptionPrintTypeVerticalSize;
+            else if(ch == 's'){ // sortBy
+                _options.sortBy = YGOptionSortBySize;
             }
             else if(ch == 'n'){ // sort by name
                 _options.sortBy = YGOptionSortByName;
@@ -79,10 +79,12 @@
             else if(ch == 'd'){ // sort descending
                 _options.sortDirection = YGOptionSortDirectionDescending;
             }
-            else if(ch == 'd'){ // sort descending
+            else if(ch == 'h'){ // sort descending
                 _options.showHideDirs = YGOptionShowHideDirsYES;
             }
-
+            else if(ch == 'e'){ // sort descending
+                _options.showMode = YGOptionShowModeExtended;
+            }
         }
     }
 #ifdef FUNC_DEBUG

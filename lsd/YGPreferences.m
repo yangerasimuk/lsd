@@ -34,15 +34,13 @@
     
     YGConfig *config = [YGConfig sharedInstance];
     
-    NSString *printType = [NSString stringWithFormat:@"%@", [config valueForKey:@"printType"]];
+    NSString *printType = [NSString stringWithFormat:@"%@", [config valueForKey:@"PrintType"]];
     if([printType compare:@"Line"] == NSOrderedSame)
         resultOptions.printType = YGOptionPrintTypeLine;
     else if([printType compare:@"Vertical"] == NSOrderedSame)
         resultOptions.printType = YGOptionPrintTypeVertical;
-    else if([printType compare:@"VerticalSize"] == NSOrderedSame)
-        resultOptions.printType = YGOptionPrintTypeVerticalSize;
-        
-    NSString *sortBy = [NSString stringWithFormat:@"%@", [config valueForKey:@"sortBy"]];
+    
+    NSString *sortBy = [NSString stringWithFormat:@"%@", [config valueForKey:@"SortBy"]];
     if([sortBy compare:@"Name"] == NSOrderedSame)
         resultOptions.sortBy = YGOptionSortByName;
     else if([sortBy compare:@"Created"] == NSOrderedSame)
@@ -52,17 +50,23 @@
     else if([sortBy compare:@"Size"] == NSOrderedSame)
         resultOptions.sortBy = YGOptionSortBySize;
 
-    NSString *sortDirection = [NSString stringWithFormat:@"%@", [config valueForKey:@"sortDirection"]];
+    NSString *sortDirection = [NSString stringWithFormat:@"%@", [config valueForKey:@"SortDirection"]];
     if([sortDirection compare:@"Asc"] == NSOrderedSame)
         resultOptions.sortDirection = YGOptionSortDirectionAscending;
     else if([sortDirection compare:@"Desc"] == NSOrderedSame)
         resultOptions.sortDirection = YGOptionSortDirectionDescending;
     
-    NSString *showHideDirs = [NSString stringWithFormat:@"%@", [config valueForKey:@"showHideDirs"]];
+    NSString *showHideDirs = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowHideDirs"]];
     if([showHideDirs compare:@"Yes"] == NSOrderedSame)
         resultOptions.showHideDirs = YGOptionShowHideDirsYES;
     else if([showHideDirs compare:@"No"] == NSOrderedSame)
         resultOptions.showHideDirs = YGOptionShowHideDirsNO;
+
+    NSString *showMode = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowMode"]];
+    if([showMode compare:@"Basic"] == NSOrderedSame)
+        resultOptions.showMode = YGOptionShowModeBasic;
+    else if([showMode compare:@"Extended"] == NSOrderedSame)
+        resultOptions.showMode = YGOptionShowModeExtended;
     
     return resultOptions;
 }
@@ -71,10 +75,11 @@
     
     YGConfig *config = [YGConfig sharedInstance];
     
-    [config setValue:@"PrintType" forKey:@"Line"];
-    [config setValue:@"SortBy" forKey:@"Name"];
-    [config setValue:@"Asc" forKey:@"sortDirection"];
-    [config setValue:@"No" forKey:@"showHideDir"];
+    [config setValue:@"Line" forKey:@"PrintType"];
+    [config setValue:@"Name" forKey:@"SortBy"];
+    [config setValue:@"Desc" forKey:@"SortDirection"];
+    [config setValue:@"No" forKey:@"ShowHideDir"];
+    [config setValue:@"Basic" forKey:@"ShowMode"];
 
 }
 
