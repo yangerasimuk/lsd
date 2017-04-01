@@ -110,7 +110,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     [formatter setTimeZone:[NSTimeZone localTimeZone]];
-    printf("\n\t%s", [[[NSTimeZone localTimeZone] description] UTF8String]);
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:locale]];
     [formatter setDateStyle:NSDateFormatterLongStyle];
     [formatter setTimeStyle:NSDateFormatterNoStyle];
