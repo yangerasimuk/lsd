@@ -67,7 +67,13 @@
         resultOptions.showMode = YGOptionShowModeBasic;
     else if([showMode compare:@"Extended"] == NSOrderedSame)
         resultOptions.showMode = YGOptionShowModeExtended;
-    
+
+    NSString *localeIdentifier = [NSString stringWithFormat:@"%@", [config valueForKey:@"LocaleIdentifier"]];
+    if([localeIdentifier compare:@"ru_RU"] == NSOrderedSame)
+        resultOptions.localeIdentifier = YGOptionLocaleIdentifierRu;
+    else if([localeIdentifier compare:@"Extended"] == NSOrderedSame)
+        resultOptions.localeIdentifier = YGOptionLocaleIdentifierEn;
+
     return resultOptions;
 }
 
@@ -80,6 +86,7 @@
     [config setValue:@"Desc" forKey:@"SortDirection"];
     [config setValue:@"No" forKey:@"ShowHideDir"];
     [config setValue:@"Basic" forKey:@"ShowMode"];
+    [config setValue:@"en_EN" forKey:@"LocaleIdentifier"];
 
 }
 

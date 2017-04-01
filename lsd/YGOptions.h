@@ -41,9 +41,16 @@ enum YGOptionShowMode {
 };
 typedef enum YGOptionShowMode YGOptionShowMode;
 
+enum YGOptionLocaleIdentifier {
+    YGOptionLocaleIdentifierRu,
+    YGOptionLocaleIdentifierEn
+};
+typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
+
+
 @interface YGOptions : NSObject
 
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode;
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
 
 - (NSString *)description;
 
@@ -52,5 +59,6 @@ typedef enum YGOptionShowMode YGOptionShowMode;
 @property YGOptionSortDirection sortDirection;
 @property YGOptionShowHideDirs showHideDirs;
 @property YGOptionShowMode showMode;
+@property YGOptionLocaleIdentifier localeIdentifier;
 
 @end

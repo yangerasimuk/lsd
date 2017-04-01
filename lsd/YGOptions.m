@@ -13,7 +13,7 @@
 /**
  Basic init for options
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
     
     self = [super init];
     if(self){
@@ -22,6 +22,7 @@
         _sortDirection = sortDireciton;
         _showHideDirs = showHideDirs;
         _showMode = showMode;
+        _localeIdentifier = localeIdentifier;
     }
     return self;
 }
@@ -40,7 +41,7 @@
  - showMode: basic mode without extended info (dates or size)
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showHideDirs:YGOptionShowHideDirsNO showMode:YGOptionShowModeBasic];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showHideDirs:YGOptionShowHideDirsNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
 }
 
 - (NSString *)description{
@@ -68,17 +69,25 @@
     if(_sortDirection == YGOptionSortDirectionDescending)
         [result appendString:@"descending"];
     
+    /* on future
     [result appendString:@" | ShowHideDirs: "];
     if(_showHideDirs == YGOptionShowHideDirsNO)
         [result appendString:@"no"];
     if(_showHideDirs == YGOptionShowHideDirsYES)
         [result appendString:@"yes"];
-
+     */
+        
     [result appendString:@" | ShowMode: "];
     if(_showMode == YGOptionShowModeBasic)
         [result appendString:@"basic"];
     if(_showMode == YGOptionShowModeExtended)
         [result appendString:@"extended"];
+    
+    [result appendString:@" | LocaleIdentifier: "];
+    if(_localeIdentifier == YGOptionLocaleIdentifierRu)
+        [result appendString:@"ru_RU"];
+    if(_localeIdentifier == YGOptionLocaleIdentifierEn)
+        [result appendString:@"en_EN"];
 
     return [result copy];
 }

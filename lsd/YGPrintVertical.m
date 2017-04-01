@@ -81,11 +81,11 @@
     for(YGDirectory *dir in sortedDirs){
         if(sortBy == YGOptionSortByCreated){
             dateString = [formatter stringFromDate:dir.created];
-            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.created];
+            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.created withLocaleIdentifier:self.options.localeIdentifier];
         }
         else if(sortBy == YGOptionSortByModified){
             dateString = [formatter stringFromDate:dir.modified];
-            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.modified];
+            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.modified withLocaleIdentifier:self.options.localeIdentifier];
         }
 
         [resultString appendFormat:@"\n%@%@%@ | %@", \
@@ -99,11 +99,19 @@
 
 }
 
-+ (NSString *)dateInHumanView:(NSDate *)date{
++ (NSString *)dateInHumanView:(NSDate *)date withLocaleIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
+    
+    NSString *locale = @"";
+    if(localeIdentifier == YGOptionLocaleIdentifierRu)
+        locale = kPrintVerticalLocaleIdentifierRu;
+    else
+        locale = kPrintVerticalLocaleIdentifierEn;
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     [formatter setTimeZone:[NSTimeZone localTimeZone]];
-    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"ru_RU"]];
+    printf("\n\t%s", [[[NSTimeZone localTimeZone] description] UTF8String]);
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:locale]];
     [formatter setDateStyle:NSDateFormatterLongStyle];
     [formatter setTimeStyle:NSDateFormatterNoStyle];
     
