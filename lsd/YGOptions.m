@@ -11,16 +11,30 @@
 @implementation YGOptions
 
 /**
- Basic init for options
+ Basic init of options of YGCommand object.
+ 
+    - printType: form of print type (in line or in vertical colomn),
+ 
+    - sortBy: property for sorting selected dirs,
+ 
+    - sortDirection: direction for sorting (ascending or descending),
+ 
+    - showDotted: show or not hidden/dotted directories,
+ 
+    - showMode: show list in basic (only name) or extended (date or size) mode,
+ 
+    - localeIdentifier: locale identifier for more human view of date,
+ 
+    - return: YGOptions instance.
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDottedDirs:(YGOptionShowDottedDirs)showDottedDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
     
     self = [super init];
     if(self){
         _printType = printType;
         _sortBy = sortBy;
         _sortDirection = sortDireciton;
-        _showDottedDirs = showDottedDirs;
+        _showDotted = showDotted;
         _showMode = showMode;
         _localeIdentifier = localeIdentifier;
     }
@@ -28,22 +42,29 @@
 }
 
 /** 
- Init with default options.
+ Wrapper init for create options with default ones.
  
- - printType: list directories in one vertical colomn
+    - printType: list directories in one vertical colomn,
  
- - sortBy: sort by file name
+    - sortBy: sort by file name,
  
- - sortDirection: sort in ascending mode
+    - sortDirection: sort in descending mode,
  
- - showHideDirs: do not show hide directories
+    - showDotted: do not show hide directories,
  
- - showMode: basic mode without extended info (dates or size)
+    - showMode: basic mode without extended info (dates or size),
+ 
+    - return: YGOptions instance.
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDottedDirs:YGOptionShowDottedDirsNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDotted:YGOptionShowDottedNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
 }
 
+/**
+ Override description message for debug.
+ 
+    - return: string for print.
+ */
 - (NSString *)description{
     NSMutableString *result = [[NSMutableString alloc] init];
     
@@ -69,10 +90,10 @@
     if(_sortDirection == YGOptionSortDirectionDescending)
         [result appendString:@"descending"];
     
-    [result appendString:@" | ShowDottedDirs: "];
-    if(_showDottedDirs == YGOptionShowDottedDirsNO)
+    [result appendString:@" | ShowDotted: "];
+    if(_showDotted == YGOptionShowDottedNO)
         [result appendString:@"no"];
-    if(_showDottedDirs == YGOptionShowDottedDirsYES)
+    if(_showDotted == YGOptionShowDottedYES)
         [result appendString:@"yes"];
 
         

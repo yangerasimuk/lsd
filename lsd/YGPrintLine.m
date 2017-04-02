@@ -13,6 +13,11 @@
 
 @implementation YGPrintLine
 
+/**
+ Base init, set actual options for superclass.
+ 
+ - options: options for command.
+ */
 - (instancetype)initWithOptions:(YGOptions *)options{
     self = [super initWithOptions:options];
     if(self){
@@ -21,6 +26,9 @@
     return self;
 }
 
+/** 
+ Print list of directories in line. Do not have extended mode.
+ */
 - (void)print{
     
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -36,10 +44,11 @@
         
         if([fm fileExistsAtPath:fsObject isDirectory:&isDir] && isDir){
             
-            // lazy init - create directory properties only defined in SortBy option (+name)
+            // lazy init - create directory properties only for name and defined in SortBy option
             YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir sortBy:self.options.sortBy];
             
-            if((self.options.showDottedDirs == YES) || (self.options.showDottedDirs == NO && !dir.isDotted))
+            // show hidden/dotted directories?
+            if((self.options.showDotted == YES) || (self.options.showDotted == NO && !dir.isDotted))
                 [dirs addObject:dir];
         }
     }

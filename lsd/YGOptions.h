@@ -30,11 +30,11 @@ enum YGOptionSortDirection {
 };
 typedef enum YGOptionSortDirection YGOptionSortDirection;
 
-enum YGOptionShowDottedDirs{
-    YGOptionShowDottedDirsNO,
-    YGOptionShowDottedDirsYES
+enum YGOptionShowDotted{
+    YGOptionShowDottedNO,
+    YGOptionShowDottedYES
 };
-typedef enum YGOptionShowDottedDirs YGOptionShowDottedDirs;
+typedef enum YGOptionShowDotted YGOptionShowDotted;
 
 enum YGOptionShowMode {
     YGOptionShowModeBasic,
@@ -51,15 +51,26 @@ typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
 
 @interface YGOptions : NSObject
 
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDottedDirs:(YGOptionShowDottedDirs)showDottedDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
 
 - (NSString *)description;
 
+/// Type of print: in line or in colomn
 @property YGOptionPrintType printType;
+
+/// Property for sort of list items
 @property YGOptionSortBy sortBy;
+
+/// Sort direction of list items
 @property YGOptionSortDirection sortDirection;
-@property YGOptionShowDottedDirs showDottedDirs;
+
+/// Show hidden/dotted directories
+@property YGOptionShowDotted showDotted;
+
+/// Show mode: basic (only names) or extended (with more info)
 @property YGOptionShowMode showMode;
+
+/// Local identifier to tune date format to more human view
 @property YGOptionLocaleIdentifier localeIdentifier;
 
 @end

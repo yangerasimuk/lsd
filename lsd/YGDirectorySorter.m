@@ -11,12 +11,22 @@
 @implementation YGDirectorySorter
 
 /**
+ Sort directories by given property and direction.
+ 
+    - dirs: array of selected, but unsorted directories for process,
+ 
+    - sortBy: directory property for sort by,
+ 
+    - sortDirection: direction of sorting: ascending or descending,
+ 
+    - return: array of sorted YGDirectory objects.
  
  Names compare in lowercase.
  */
 + (NSArray<YGDirectory *> *)sort:(NSArray<YGDirectory *> *)dirs byOrder:(YGOptionSortBy)sortBy inDirection:(YGOptionSortDirection)sortDirection{
     
     NSArray<YGDirectory *> *directories = [[NSArray alloc] init];
+    
     directories = [dirs sortedArrayUsingComparator:^NSComparisonResult(YGDirectory *obj1, YGDirectory *obj2){
         
         if(sortBy == YGOptionSortByName){
@@ -95,9 +105,7 @@
         }
         else
             return NSOrderedSame;
-        
     }];
-    
     return directories;
 }
 

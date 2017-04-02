@@ -11,12 +11,24 @@
 #import "defineConstants.h"
 
 @interface YGDirectory()
-- (id) attributeOfDirectoryByString:(NSString *)attribute;
 + (NSUInteger)recursiveWalkIn:(NSString *)dir;
+- (NSUInteger)calcSize;
+- (id) attributeOfDirectoryByString:(NSString *)attribute;
 @end
 
 @implementation YGDirectory
 
+/**
+ Base init, set all properties of directory. Selective, lazy creation of directory: init only name, path, is dotted flag and property from sortBy argument.
+ 
+    - name: directory name,
+ 
+    - path: directory path,
+ 
+    - sortBy: directory property for sort in print command,
+ 
+    - return: YGDirectory instance.
+ */
 -(instancetype)initWithName:(NSString *)name atPath:(NSString *)path sortBy:(YGOptionSortBy)sortBy{
     self = [super init];
     if(self){
@@ -37,30 +49,42 @@
     return self;
 }
 
+/**
+ Wrapper for base init, with name and path, and default argument sortBy.
+ */
+-(instancetype)initWithName:(NSString *)name atPath:(NSString *)path{
+    return [self initWithName:name atPath:path sortBy:YGOptionSortByName];
+}
 
+/**
+ Wrapper for base init, with name, current path and default argument sortBy.
+ */
+- (instancetype) initWithName:(NSString *)name{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    return [self initWithName:name atPath:[fm currentDirectoryPath] sortBy:YGOptionSortByName];
+}
+
+/**
+ Recursive walk in all subdirectories of directory for getting size of directory.
+ 
+    - dir: directory for begining walk,
+ 
+    - return: sum of all files sizes.
+ */
 + (NSUInteger)recursiveWalkIn:(NSString *)dir{
     
     NSUInteger acc = 0;
 
     NSFileManager *fm = [NSFileManager defaultManager];
     NSDirectoryEnumerator *de = [fm enumeratorAtPath:dir];
-    //NSString *curDir = [fm currentDirectoryPath];
     id fsObject = nil;
     BOOL isDir = NO;
     NSError *error = nil;
     
-    //printf("\ndir: %s", [dir UTF8String]);
-    //printf("\ncurDir: %s", [curDir UTF8String]);
-    //printf("\n%s", [ UTF8String]);
-
     while(fsObject = [de nextObject]){
         [de skipDescendants];
         
-        //printf("\nnextObject: %s", [fsObject UTF8String]);
-        
         NSString *fsObjectPath = [NSString stringWithFormat:@"%@/%@", dir, fsObject];
-        
-        //printf("\nfsObjectPath: %s", [fsObjectPath UTF8String]);
         
         if([fm fileExistsAtPath:fsObjectPath isDirectory:&isDir]){
             
@@ -70,23 +94,18 @@
             else{
                 NSDictionary *attr = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@", fsObjectPath] error:&error];
                 
-                //NSLog(@"%@", [attr valueForKey:@"NSFileSize"]);
-                //NSUInteger size = (unsigned long long)[attr valueForKey:@"NSFileSize"];
-                
                 NSNumber *number = [NSNumber numberWithLong:0];
                 number = [attr valueForKey:@"NSFileSize"];
-                acc += [number longLongValue]; //[attr valueForKey:@"NSFileSize"];
-                
-                //printf("\tsize = %lu", size);
+                acc += [number longLongValue];
                 
                 if(error){
-                    //printf("\nError: %s", [[error description] UTF8String]);
+                    printf("\n%s. Error: %s", [fsObjectPath UTF8String], [[error description] UTF8String]);
                 }
             }
             
         }
         else{
-            //printf("\nFile is not exists...");
+            printf("\n%s is not exists.", [fsObjectPath UTF8String]);
         }
     }
     
@@ -94,27 +113,28 @@
 }
 
 /**
- Calc size of directory. Wrapper on recursive function.
+ Calc size of directory. Wrapper on recursive message recursiveWalkIn.
  */
 - (NSUInteger)calcSize{
     return [YGDirectory recursiveWalkIn:_fullName];
 }
 
--(instancetype)initWithName:(NSString *)name atPath:(NSString *)path{
-    return [self initWithName:name atPath:path sortBy:YGOptionSortByName];
-}
-
-- (instancetype) initWithName:(NSString *)name{
-    NSFileManager *fm = [NSFileManager defaultManager];
-    return [self initWithName:name atPath:[fm currentDirectoryPath] sortBy:YGOptionSortByName];
-}
-
-
+/**
+ Getting file attribute of current directory by attribute name.
+ 
+    - attribute: name of attribute,
+ 
+    - return: id object of attribute. NSUInteger, NSDate, NSString etc.
+ */
 - (id)attributeOfDirectoryByString:(NSString *)attribute{
 
     NSError *error = nil;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSDictionary *attr = [fm attributesOfItemAtPath:_fullName error:&error];
+    
+    if(error){
+        printf("\n%s. Error: %s", [_fullName UTF8String], [[error description] UTF8String]);
+    }
     
     return [attr valueForKey:attribute];
 }

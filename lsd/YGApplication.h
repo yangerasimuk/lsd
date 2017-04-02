@@ -15,7 +15,10 @@
 + (YGApplication *) sharedInstance;
 - (void) defineOptions:(NSString *)args;
 
+/// Options overrided by user, get from command line
 @property (readonly) YGOptions *options;
+
+/// Options by default, get from config
 @property (readonly) YGPreferences *preferences;
 
 @end

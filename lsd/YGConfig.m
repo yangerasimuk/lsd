@@ -10,19 +10,21 @@
 #import "defineConstants.h"
 
 @interface YGConfig(){
-    //YGFileName *_fileName;
-    //NSString *_fileName;
     NSMutableDictionary *_dictionary;
 }
 @end
 
 @implementation YGConfig
 
+/** 
+ Base init for config. If config exists func load options in inner dictionary.
+ 
+    - return: YGOptions instance.
+ */
 - (instancetype)init{
     self = [super init];
     if(self){
         _fileName = [YGConfig fileNameByDefault];
-        //_dictionary = [[NSDictionary alloc] initWithContentsOfFile:_fileName.fullName];
         if([YGConfig isExists])
             _dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_fileName];
         else
@@ -31,6 +33,11 @@
     return self;
 }
 
+/**
+ Config singleton.
+ 
+    - return: single instance of YGConfig.
+ */
 + (YGConfig *)sharedInstance{
     static YGConfig *config = nil;
     static dispatch_once_t onceToken;
@@ -40,20 +47,43 @@
     return config;
 }
 
+/**
+ Get default file name for config.
+ 
+    - return: full name for config.
+ */
++ (NSString *)fileNameByDefault{
+    return [NSString stringWithFormat:@"%@/%@", NSHomeDirectory(), kLsdConfigName];
+}
+
+/**
+ Get value for given key.
+ 
+    - key: key for search in dictionary,
+ 
+    - return: string of value.
+ */
 - (NSString *)valueForKey:(NSString *)key{
     return [NSString stringWithFormat:@"%@", _dictionary[key]];
 }
 
+/**
+ Set given value for given key. Set in inner dictinary and extern config file.
+ 
+    - value: string of value for setting,
+ 
+    - key: string of key in option.
+ */
 - (void) setValue:(NSString *)value forKey:(NSString *)key{
     [_dictionary setValue:value forKey:key];
     [_dictionary writeToFile:[YGConfig fileNameByDefault] atomically:YES];
 }
 
-
-+ (NSString *)fileNameByDefault{
-    return [NSString stringWithFormat:@"%@/%@", NSHomeDirectory(), kLsdConfigName];
-}
-
+/**
+ Check of config file existens.
+ 
+    - return: exists or not.
+ */
 + (BOOL)isExists{
     NSFileManager *fm = [NSFileManager defaultManager];
     

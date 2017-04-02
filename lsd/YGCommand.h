@@ -20,6 +20,7 @@
 - (instancetype)initWithOptions:(YGOptions *)options;
 + (id<YGPrinting>)commandWithOptions:(YGOptions *)options;
 
+/// Actual options of command
 @property YGOptions *options;
 
 @end

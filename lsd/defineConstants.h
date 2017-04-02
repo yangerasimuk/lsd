@@ -6,7 +6,7 @@
 //  Copyright © 2017 Yan Gerasimuk. All rights reserved.
 //
 
-#define kLsdVersion "0.3.0"
+#define kLsdVersion "0.3.1"
 #define kLsdBuild "April 2, 2017"
 #define kLsdAuthor "Yan Gerasimuk"
 

@@ -11,6 +11,11 @@
 
 @implementation YGPrintHelp
 
+/**
+ Base init, set actual options for superclass.
+ 
+ - options: options for command.
+ */
 - (instancetype)initWithOptions:(YGOptions *)options{
     self = [super initWithOptions:options];
     if(self){
@@ -19,6 +24,9 @@
     return self;
 }
 
+/**
+ Print help info about application.
+ */
 - (void)print{
     
     printf("\nlsd. List directories macOS app. Version: %s, build %s. %s", kLsdVersion, kLsdBuild, kLsdAuthor);
@@ -40,6 +48,5 @@
     printf("\nConfig file: ~/.lsd.config.xml");
     printf("\nMIT license. Sources: https://github.com/yangerasimuk/lsd");
 }
-
 
 @end

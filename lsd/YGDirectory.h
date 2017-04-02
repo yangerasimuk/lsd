@@ -15,11 +15,22 @@
 - (instancetype) initWithName:(NSString *)name atPath:(NSString *)path;
 - (instancetype) initWithName:(NSString *)name;
 
+/// Directory name
 @property NSString *name;
+
+/// Directory full name (path + name)
 @property NSString *fullName;
+
+/// Date created, get from file attributes
 @property NSDate *created;
+
+/// Date modified, get from file attributes
 @property NSDate *modified;
+
+/// Size in bytes, sum of all files (recursive)
 @property NSUInteger size;
+
+/// Is directory hidden/dotted?
 @property BOOL isDotted;
 
 @end

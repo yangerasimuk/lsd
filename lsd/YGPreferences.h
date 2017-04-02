@@ -14,6 +14,7 @@
 
 - (instancetype) init;
 
+/// Default options for command, get from config
 @property YGOptions *options;
 
 @end

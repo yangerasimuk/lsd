@@ -14,6 +14,9 @@
 
 @implementation YGApplication
 
+/**
+ Singleton for application instance.
+ */
 + (YGApplication *) sharedInstance{
     
     static YGApplication *app = nil;
@@ -25,6 +28,9 @@
     return app;
 }
 
+/**
+ Base init. Set properties for default and actual options.
+ */
 - (instancetype) init{
     self = [super init];
     if(self){
@@ -34,38 +40,32 @@
     return self;
 }
 
-
+/**
+ Define actual options, first get all options from config, then override with user ones (get from command line).
+ 
+    - args: string of arguments in command line.
+ 
+ If args == nil, all options by defaults.
+ */
 - (void) defineOptions:(NSString *)args{
-#ifdef FUNC_DEBUG
-#undef FUNC_DEBUG
-#endif
-    
-#ifdef FUNC_DEBUG
-    printf("\nArgs: %s", [args UTF8String]);
-#endif
-    
+
+    // default options
     _options = _preferences.options;
 
-#ifdef FUNC_DEBUG
-    printf("\nDefaults: %s", [[_options description] UTF8String]);
-#endif
-    
-    
+
+    // get options from command line, if args == nil, all options by defaults
     if(args){
         for(NSUInteger i = 0; i < [args length]; i++){
             unichar ch = [args characterAtIndex:i];
             
-            if(ch == 'l'){ // printLine
+            if(ch == 'l'){ // print in line
                 _options.printType = YGOptionPrintTypeLine;
             }
-            else if(ch == 'v'){ // printColomn // vertical
+            else if(ch == 'v'){ // print in vertical colomn // vertical
                 _options.printType = YGOptionPrintTypeVertical;
             }
             else if(ch == '?'){ // print help
                 _options.printType = YGOptionPrintTypeHelp;
-            }
-            else if(ch == 's'){ // sortBy
-                _options.sortBy = YGOptionSortBySize;
             }
             else if(ch == 'n'){ // sort by name
                 _options.sortBy = YGOptionSortByName;
@@ -76,6 +76,9 @@
             else if(ch == 'm'){ // sort by modified dat
                 _options.sortBy = YGOptionSortByModified;
             }
+            else if(ch == 's'){ // sortBy size
+                _options.sortBy = YGOptionSortBySize;
+            }
             else if(ch == 'a'){ // sort ascending
                 _options.sortDirection = YGOptionSortDirectionAscending;
             }
@@ -83,19 +86,16 @@
                 _options.sortDirection = YGOptionSortDirectionDescending;
             }
             else if(ch == 'h'){ // hide dotted dirs
-                _options.showDottedDirs = YGOptionShowDottedDirsYES;
+                _options.showDotted = YGOptionShowDottedYES;
             }
-            else if(ch == 'b'){
+            else if(ch == 'b'){ // basic show mode
                 _options.showMode = YGOptionShowModeBasic;
             }
-            else if(ch == 'e'){ // show mode - extended
+            else if(ch == 'e'){ // extended show mode
                 _options.showMode = YGOptionShowModeExtended;
             }
         }
     }
-#ifdef FUNC_DEBUG
-    printf("\nResult: %s", [[_options description] UTF8String]);
-#endif
 }
 
 @end

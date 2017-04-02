@@ -10,17 +10,19 @@
 #import "YGApplication.h"
 
 @interface YGPreferences()
-+ (BOOL) isExists;
 + (YGOptions *)defaultOptions;
 + (void)setDefaultOptions;
 @end
 
 @implementation YGPreferences
 
+/**
+ Base init. Check config exists, if not - create config file, then set default options.
+ */
 - (instancetype) init{
     self = [super init];
     if(self){
-        if(![YGPreferences isExists])
+        if(![YGConfig isExists])
             [YGPreferences setDefaultOptions];
         
         _options = [YGPreferences defaultOptions];
@@ -28,12 +30,19 @@
     return self;
 }
 
+/**
+ Get default options of command from config.
+ 
+    - return: default options of command.
+ */
 + (YGOptions *)defaultOptions{
     
     YGOptions *resultOptions = [[YGOptions alloc] init];
     
+    // single
     YGConfig *config = [YGConfig sharedInstance];
     
+    // if config contents not defined string - print help
     NSString *printType = [NSString stringWithFormat:@"%@", [config valueForKey:@"PrintType"]];
     if([printType compare:@"Line"] == NSOrderedSame)
         resultOptions.printType = YGOptionPrintTypeLine;
@@ -58,11 +67,11 @@
     else if([sortDirection compare:@"Desc"] == NSOrderedSame)
         resultOptions.sortDirection = YGOptionSortDirectionDescending;
     
-    NSString *showDottedDirs = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowDottedDirs"]];
-    if([showDottedDirs compare:@"Yes"] == NSOrderedSame)
-        resultOptions.showDottedDirs = YGOptionShowDottedDirsYES;
-    else if([showDottedDirs compare:@"No"] == NSOrderedSame)
-        resultOptions.showDottedDirs = YGOptionShowDottedDirsNO;
+    NSString *showDotted = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowDotted"]];
+    if([showDotted compare:@"Yes"] == NSOrderedSame)
+        resultOptions.showDotted = YGOptionShowDottedYES;
+    else if([showDotted compare:@"No"] == NSOrderedSame)
+        resultOptions.showDotted = YGOptionShowDottedNO;
 
     NSString *showMode = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowMode"]];
     if([showMode compare:@"Basic"] == NSOrderedSame)
@@ -79,6 +88,9 @@
     return resultOptions;
 }
 
+/**
+ Write default options to config.
+ */
 + (void)setDefaultOptions{
     
     YGConfig *config = [YGConfig sharedInstance];
@@ -86,18 +98,9 @@
     [config setValue:@"Line" forKey:@"PrintType"];
     [config setValue:@"Name" forKey:@"SortBy"];
     [config setValue:@"Desc" forKey:@"SortDirection"];
-    [config setValue:@"No" forKey:@"ShowDottedDir"];
+    [config setValue:@"No" forKey:@"ShowDotted"];
     [config setValue:@"Basic" forKey:@"ShowMode"];
     [config setValue:@"en_EN" forKey:@"LocaleIdentifier"];
-
-}
-
-+ (BOOL) isExists{
-    
-    if([YGConfig isExists])
-        return YES;
-    else
-        return NO;
 }
 
 @end

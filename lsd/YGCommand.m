@@ -13,6 +13,9 @@
 
 @implementation YGCommand
 
+/**
+ Base init, set command options.
+ */
 - (instancetype)initWithOptions:(YGOptions *)options{
     self = [super init];
     if(self){
@@ -21,6 +24,13 @@
     return self;
 }
 
+/**
+ Fabric message for creation new command in depends of actual options.
+ 
+ - options: actual options of command.
+ 
+ - return: object with print message. YGPrintLine, YGPrintVertical or YGPrintHelp.
+ */
 + (id<YGPrinting>)commandWithOptions:(YGOptions *)options{
     
     id<YGPrinting> command = nil;

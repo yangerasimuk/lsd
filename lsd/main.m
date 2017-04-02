@@ -14,11 +14,11 @@
 int main(int argc, const char * argv[]) {
 
     @autoreleasepool {
-                
-        // singleton
+        
+        // single
         YGApplication *app = [YGApplication sharedInstance];
         
-        // parse argument of command line
+        // parse arguments in command line
         if(argc == 1) //lsd
             [app defineOptions:nil];
         else if(argc == 2) //lsd -vs
@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
         // actual options, debug only
         // printf("\n%s\n", [[app.options description] UTF8String]);
         
-        // fabric command with options
+        // fabric command creation with options
         id<YGPrinting> command = [YGCommand commandWithOptions:[app options]];
         
         // result print
