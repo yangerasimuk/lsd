@@ -40,7 +40,9 @@
         
         if([fm fileExistsAtPath:fsObject isDirectory:&isDir] && isDir){
             YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir sortBy:self.options.sortBy];
-            [dirs addObject:dir];
+            
+            if((self.options.showDottedDirs == YES) || (self.options.showDottedDirs == NO && !dir.isDotted))
+                [dirs addObject:dir];
         }
     }
     

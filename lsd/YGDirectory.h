@@ -20,5 +20,6 @@
 @property NSDate *created;
 @property NSDate *modified;
 @property NSUInteger size;
+@property BOOL isDotted;
 
 @end

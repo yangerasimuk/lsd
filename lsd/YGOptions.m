@@ -13,14 +13,14 @@
 /**
  Basic init for options
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDottedDirs:(YGOptionShowDottedDirs)showDottedDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
     
     self = [super init];
     if(self){
         _printType = printType;
         _sortBy = sortBy;
         _sortDirection = sortDireciton;
-        _showHideDirs = showHideDirs;
+        _showDottedDirs = showDottedDirs;
         _showMode = showMode;
         _localeIdentifier = localeIdentifier;
     }
@@ -41,7 +41,7 @@
  - showMode: basic mode without extended info (dates or size)
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showHideDirs:YGOptionShowHideDirsNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDottedDirs:YGOptionShowDottedDirsNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
 }
 
 - (NSString *)description{
@@ -69,13 +69,12 @@
     if(_sortDirection == YGOptionSortDirectionDescending)
         [result appendString:@"descending"];
     
-    /* on future
-    [result appendString:@" | ShowHideDirs: "];
-    if(_showHideDirs == YGOptionShowHideDirsNO)
+    [result appendString:@" | ShowDottedDirs: "];
+    if(_showDottedDirs == YGOptionShowDottedDirsNO)
         [result appendString:@"no"];
-    if(_showHideDirs == YGOptionShowHideDirsYES)
+    if(_showDottedDirs == YGOptionShowDottedDirsYES)
         [result appendString:@"yes"];
-     */
+
         
     [result appendString:@" | ShowMode: "];
     if(_showMode == YGOptionShowModeBasic)

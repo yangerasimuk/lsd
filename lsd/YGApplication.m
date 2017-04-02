@@ -61,6 +61,9 @@
             else if(ch == 'v'){ // printColomn // vertical
                 _options.printType = YGOptionPrintTypeVertical;
             }
+            else if(ch == '?'){ // print help
+                _options.printType = YGOptionPrintTypeHelp;
+            }
             else if(ch == 's'){ // sortBy
                 _options.sortBy = YGOptionSortBySize;
             }
@@ -79,10 +82,13 @@
             else if(ch == 'd'){ // sort descending
                 _options.sortDirection = YGOptionSortDirectionDescending;
             }
-            else if(ch == 'h'){ // sort descending
-                _options.showHideDirs = YGOptionShowHideDirsYES;
+            else if(ch == 'h'){ // hide dotted dirs
+                _options.showDottedDirs = YGOptionShowDottedDirsYES;
             }
-            else if(ch == 'e'){ // sort descending
+            else if(ch == 'b'){
+                _options.showMode = YGOptionShowModeBasic;
+            }
+            else if(ch == 'e'){ // show mode - extended
                 _options.showMode = YGOptionShowModeExtended;
             }
         }

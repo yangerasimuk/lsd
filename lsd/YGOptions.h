@@ -10,7 +10,8 @@
 
 enum YGOptionPrintType {
     YGOptionPrintTypeLine,
-    YGOptionPrintTypeVertical
+    YGOptionPrintTypeVertical,
+    YGOptionPrintTypeHelp
 };
 typedef enum YGOptionPrintType YGOptionPrintType;
 
@@ -29,11 +30,11 @@ enum YGOptionSortDirection {
 };
 typedef enum YGOptionSortDirection YGOptionSortDirection;
 
-enum YGOptionShowHideDirs{
-    YGOptionShowHideDirsNO,
-    YGOptionShowHideDirsYES
+enum YGOptionShowDottedDirs{
+    YGOptionShowDottedDirsNO,
+    YGOptionShowDottedDirsYES
 };
-typedef enum YGOptionShowHideDirs YGOptionShowHideDirs;
+typedef enum YGOptionShowDottedDirs YGOptionShowDottedDirs;
 
 enum YGOptionShowMode {
     YGOptionShowModeBasic,
@@ -50,14 +51,14 @@ typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
 
 @interface YGOptions : NSObject
 
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showHideDirs:(YGOptionShowHideDirs)showHideDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDottedDirs:(YGOptionShowDottedDirs)showDottedDirs showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
 
 - (NSString *)description;
 
 @property YGOptionPrintType printType;
 @property YGOptionSortBy sortBy;
 @property YGOptionSortDirection sortDirection;
-@property YGOptionShowHideDirs showHideDirs;
+@property YGOptionShowDottedDirs showDottedDirs;
 @property YGOptionShowMode showMode;
 @property YGOptionLocaleIdentifier localeIdentifier;
 

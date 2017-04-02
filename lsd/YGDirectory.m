@@ -22,6 +22,10 @@
     if(self){
         _name = [name copy];
         _fullName = [NSString stringWithFormat:@"%@/%@", path, name];
+        if([_name characterAtIndex:0] == '.')
+            _isDotted = YES;
+        else
+            _isDotted = NO;
 
         if(sortBy == YGOptionSortByCreated)
             _created = [self attributeOfDirectoryByString:@"NSFileCreationDate"];

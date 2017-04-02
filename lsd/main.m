@@ -12,9 +12,7 @@
 #import "YGOptions.h"
 
 int main(int argc, const char * argv[]) {
-#ifndef FUNC_DEBUG
-#define FUNC_DEBUG
-#endif
+
     @autoreleasepool {
                 
         // singleton
@@ -26,10 +24,8 @@ int main(int argc, const char * argv[]) {
         else if(argc == 2) //lsd -vs
             [app defineOptions:[NSString stringWithUTF8String:argv[1]]];
         
-#ifdef FUNC_DEBUG
-        // actual options
-        printf("\n%s\n", [[app.options description] UTF8String]);
-#endif
+        // actual options, debug only
+        // printf("\n%s\n", [[app.options description] UTF8String]);
         
         // fabric command with options
         id<YGPrinting> command = [YGCommand commandWithOptions:[app options]];

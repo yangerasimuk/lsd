@@ -9,6 +9,7 @@
 #import "YGCommand.h"
 #import "YGPrintLine.h"
 #import "YGPrintVertical.h"
+#import "YGPrintHelp.h"
 
 @implementation YGCommand
 
@@ -30,6 +31,8 @@
     else if(options.printType == YGOptionPrintTypeVertical){
         command = [[YGPrintVertical alloc] initWithOptions:options];
     }
+    else
+        command = [[YGPrintHelp alloc] initWithOptions:options];
     
     return command;
 }

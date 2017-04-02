@@ -39,6 +39,8 @@
         resultOptions.printType = YGOptionPrintTypeLine;
     else if([printType compare:@"Vertical"] == NSOrderedSame)
         resultOptions.printType = YGOptionPrintTypeVertical;
+    else
+        resultOptions.printType = YGOptionPrintTypeHelp;
     
     NSString *sortBy = [NSString stringWithFormat:@"%@", [config valueForKey:@"SortBy"]];
     if([sortBy compare:@"Name"] == NSOrderedSame)
@@ -56,11 +58,11 @@
     else if([sortDirection compare:@"Desc"] == NSOrderedSame)
         resultOptions.sortDirection = YGOptionSortDirectionDescending;
     
-    NSString *showHideDirs = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowHideDirs"]];
-    if([showHideDirs compare:@"Yes"] == NSOrderedSame)
-        resultOptions.showHideDirs = YGOptionShowHideDirsYES;
-    else if([showHideDirs compare:@"No"] == NSOrderedSame)
-        resultOptions.showHideDirs = YGOptionShowHideDirsNO;
+    NSString *showDottedDirs = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowDottedDirs"]];
+    if([showDottedDirs compare:@"Yes"] == NSOrderedSame)
+        resultOptions.showDottedDirs = YGOptionShowDottedDirsYES;
+    else if([showDottedDirs compare:@"No"] == NSOrderedSame)
+        resultOptions.showDottedDirs = YGOptionShowDottedDirsNO;
 
     NSString *showMode = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowMode"]];
     if([showMode compare:@"Basic"] == NSOrderedSame)
@@ -84,7 +86,7 @@
     [config setValue:@"Line" forKey:@"PrintType"];
     [config setValue:@"Name" forKey:@"SortBy"];
     [config setValue:@"Desc" forKey:@"SortDirection"];
-    [config setValue:@"No" forKey:@"ShowHideDir"];
+    [config setValue:@"No" forKey:@"ShowDottedDir"];
     [config setValue:@"Basic" forKey:@"ShowMode"];
     [config setValue:@"en_EN" forKey:@"LocaleIdentifier"];
 
@@ -97,6 +99,5 @@
     else
         return NO;
 }
-
 
 @end
