@@ -7,7 +7,7 @@ I like use console, but in some cases I became unhappy. For example, I enter in 
 Make console app (for macOS in my case), for listing directories in more usefull form with follow options: list or vertical colomn, sort by name, creation date, modification date and size, ascending or descending sort direction, show date or size or not, show hidden directories or not.
 
 ## Setup
-To make app work in any folder place app in one of the folders availible through path environments. I prefer _/usr/local/bin_. Building process of XCode project copy executive file in _/usr/local/bin_ automaticaly.
+To make app work in any folder - place app in one of the folders availible through path environments. I prefer _/usr/local/bin_. Building process of XCode project copy executive file in _/usr/local/bin_ automaticaly.
 
 ## Usage
 Open console (Terminal.app) and enter _lsd_. By default you get list of directories in one colomn with sort by directory name in descend direction, hidden (with leading dot) directories will not show.
