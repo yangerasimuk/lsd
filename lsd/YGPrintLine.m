@@ -54,17 +54,24 @@
         }
     }
     
-    if([dirs count] == 0){
-        printf("No files...");
+    if([dirs count] == 0)
         return;
-    }
     
     NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
     
-    //printf("\n");
+    // nice output with separate line
+    if(self.options.addSeparateLine == YGOptionAddSeparateLineYes)
+        printf("\n");
+
     for(YGDirectory *dir in sortedDirs){
         printf(kPrintLineGap, [dir.name UTF8String]);
     }
+    
+    // nice output with separate line
+    if(self.options.addSeparateLine == YGOptionAddSeparateLineYes)
+        printf("\n");
+    printf("\n");
+
 }
 
 @end

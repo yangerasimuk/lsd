@@ -29,7 +29,11 @@
  */
 - (void)print{
     
-    printf("lsd. List directories for macOS app. Version: %s, build %s. %s", kLsdVersion, kLsdBuild, kLsdAuthor);
+    // nice output with separate line
+    if(self.options.addSeparateLine == YGOptionAddSeparateLineYes)
+        printf("\n");
+    
+    printf("lsd. List directories for macOS. Version: %s, build %s. %s", kLsdVersion, kLsdBuild, kLsdAuthor);
     printf("\nUsage: lsd -[lv?adncmsbeh] \
            \n\tl - print directories in line (default), \
            \n\tv - print directories in vertical colomn, \
@@ -47,6 +51,11 @@
     
     printf("\nConfig file: ~/.lsd.config.xml");
     printf("\nMIT license. Sources: https://github.com/yangerasimuk/lsd");
+    
+    // nice output with separate line
+    if(self.options.addSeparateLine == YGOptionAddSeparateLineYes)
+        printf("\n");
+    printf("\n");
 }
 
 @end
