@@ -37,8 +37,11 @@ You can edit default mode of app launching. Options stored in config xml file - 
 ## Performance
 App is very small and quick, but if it work with sort by size - process of calc file sizes will may get long time.
 
+## Notes
+App calculate only file size, while size on disk may be different. There are different methods of calculation: several system functions to compute directory size, include or not empty directories, different "sizes" of packages. In that way total size output by app may differ from size shown in Finder. Differences is very small, but may be exists.
+
 gl hf
 
-April, 2 2017
+April, 3 2017
 
 Yan Gerasimuk
