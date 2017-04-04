@@ -72,9 +72,9 @@
     - return: sum of all files sizes.
  */
 + (NSUInteger)recursiveWalkIn:(NSString *)dir{
-    
+        
     NSUInteger acc = 0;
-
+    
     NSFileManager *fm = [NSFileManager defaultManager];
     NSDirectoryEnumerator *de = [fm enumeratorAtPath:dir];
     id fsObject = nil;
@@ -89,14 +89,16 @@
         if([fm fileExistsAtPath:fsObjectPath isDirectory:&isDir]){
             
             if(isDir){
+                
                 acc += [YGDirectory recursiveWalkIn:[NSString stringWithFormat:@"%@", fsObjectPath]];
+                
             }
             else{
                 NSDictionary *attr = [fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@", fsObjectPath] error:&error];
-                
+                                
                 NSNumber *number = [NSNumber numberWithLong:0];
                 number = [attr valueForKey:@"NSFileSize"];
-                acc += [number longLongValue];
+                acc += [number unsignedIntegerValue];
                 
                 if(error){
                     printf("\n%s. Error: %s", [fsObjectPath UTF8String], [[error description] UTF8String]);

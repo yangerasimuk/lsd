@@ -27,7 +27,7 @@
  
     - return: YGOptions instance.
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier showInfo:(YGOptionShowInfo)showInfo{
     
     self = [super init];
     if(self){
@@ -37,6 +37,7 @@
         _showDotted = showDotted;
         _showMode = showMode;
         _localeIdentifier = localeIdentifier;
+        _showInfo = showInfo;
     }
     return self;
 }
@@ -57,7 +58,7 @@
     - return: YGOptions instance.
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDotted:YGOptionShowDottedNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDotted:YGOptionShowDottedNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn showInfo:YGOptionShowInfoNO];
 }
 
 /**
@@ -108,6 +109,12 @@
         [result appendString:@"ru_RU"];
     if(_localeIdentifier == YGOptionLocaleIdentifierEn)
         [result appendString:@"en_EN"];
+    
+    [result appendString:@" | ShowInfo: "];
+    if(_showInfo == YGOptionShowInfoYES)
+        [result appendString:@"Yes"];
+    if(_showInfo == YGOptionShowInfoNO)
+        [result appendString:@"No"];
 
     return [result copy];
 }

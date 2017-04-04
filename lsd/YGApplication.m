@@ -94,6 +94,9 @@
             else if(ch == 'e'){ // extended show mode
                 _options.showMode = YGOptionShowModeExtended;
             }
+            else if(ch == 'i'){ // show actual options info
+                _options.showInfo = YGOptionShowInfoYES;
+            }
         }
     }
 }

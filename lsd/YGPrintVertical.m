@@ -12,7 +12,8 @@
 #import "defineConstants.h"
 
 @interface YGPrintVertical()
-+ (NSString *)sizeInHumanView:(NSUInteger)size;
++ (NSUInteger)maxDirNameLength:(NSArray *)dirsSorted;
++ (NSUInteger)maxSizeSeparatorLocation:(NSArray *)dirsSorted;
 @end
 
 @implementation YGPrintVertical
@@ -36,20 +37,31 @@
 - (void)print{
     
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *curDir = [fm currentDirectoryPath];
-    NSDirectoryEnumerator *de = [fm enumeratorAtPath:curDir];
+    NSDirectoryEnumerator *de = [fm enumeratorAtPath:[fm currentDirectoryPath]];
     NSString *fsObject = @"";
     BOOL isDir = NO;
     NSMutableArray<YGDirectory *> *dirs = [[NSMutableArray alloc] init];
     
     while(fsObject = [de nextObject]){
         
+        /*
+        NSDictionary *d = [de directoryAttributes];
+        NSArray *keys = [d allKeys];
+        
+        NSLog(@"%@", fsObject);
+        for(id key in keys){
+            NSLog(@"\t%@=%@", key, d[key]);
+        }
+        
+        */
+        
+        
         // do not go in subdirectories
         [de skipDescendants];
         
         // select only directories
         if([fm fileExistsAtPath:fsObject isDirectory:&isDir] && isDir){
-            YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir sortBy:self.options.sortBy];
+            YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:[fm currentDirectoryPath] sortBy:self.options.sortBy];
             
             // skip hidden/dotted files
             if((self.options.showDotted == YES) || (self.options.showDotted == NO && !dir.isDotted))
@@ -57,40 +69,93 @@
         }
     }
     
-    NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
+    NSArray *dirsSorted = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
     
     // choice extended or base show mode
     if(self.options.showMode == YGOptionShowModeExtended && self.options.sortBy != YGOptionSortByName){
-        if(self.options.sortBy == YGOptionSortByCreated)
-            printf("%s", [[self stringExtended:sortedDirs forSortByDate:YGOptionSortByCreated] UTF8String]);
-        else if(self.options.sortBy == YGOptionSortByModified)
-            printf("%s", [[self stringExtended:sortedDirs forSortByDate:YGOptionSortByModified] UTF8String]);
-        else if(self.options.sortBy == YGOptionSortBySize)
-            printf("%s", [[self stringExtendedForSize:sortedDirs] UTF8String]);
+        
+        // max length of dir name in array for align colomns for nice view
+        NSUInteger maxDirNameLength = [YGPrintVertical maxDirNameLength:dirsSorted];
+        
+        if(self.options.sortBy == YGOptionSortByCreated || self.options.sortBy == YGOptionSortByModified){
+            
+            for(YGDirectory *dir in dirsSorted){
+                
+                NSDate *date = nil;
+                if(self.options.sortBy == YGOptionSortByCreated)
+                    date = dir.created;
+                else if(self.options.sortBy == YGOptionSortByModified)
+                    date = dir.modified;
+                
+                printf("\n%s%s%s", \
+                       [[YGPrintVertical alignDirNameString:dir.name withMaxLength:maxDirNameLength] UTF8String], \
+                       kPrintVerticalExtendedGap, \
+                       [[YGPrintVertical stringForDate:date withLocaleIdentifier:self.options.localeIdentifier] UTF8String] \
+                       );
+            }
+        }
+        else if(self.options.sortBy == YGOptionSortBySize){
+            
+            NSUInteger maxSizeSeparatorLocation = [YGPrintVertical maxSizeSeparatorLocation:dirsSorted];
+            
+            for(YGDirectory *dir in dirsSorted){
+                printf("\n%s%s%s", \
+                       [[YGPrintVertical alignDirNameString:dir.name withMaxLength:maxDirNameLength] UTF8String], \
+                       kPrintVerticalExtendedGap, \
+                       [[YGPrintVertical alignSizeString:[YGPrintVertical stringForSize:dir.size] withMaxSizeSeparatorLocation:maxSizeSeparatorLocation] UTF8String] \
+                       );
+            }
+        }
     }
     else{
-        for(YGDirectory *dir in sortedDirs)
+        for(YGDirectory *dir in dirs)
             printf("\n%s", [dir.name UTF8String]);
     }
 }
 
-/**
- Make date string for YGDirectory instance in more human veiw. For example: 2017-03-31 10:34:51 | March 31, 2017.
++ (NSUInteger)maxDirNameLength:(NSArray *)dirsSorted{
+    
+    NSUInteger maxLength = 0;
+    
+    for(YGDirectory *dir in dirsSorted){
+        if([dir.name length] > maxLength)
+            maxLength = [dir.name length];
+    }
+    
+    return maxLength;
+}
+
+/** ******************
+ Transform name string of selected directory, to align in nice colomn. Next colomn will have same offset. To short names append spaces.
  
-    - sortedDirs: array of sorted directories to get info for align colomns,
+ - dirName: size string of selected directory,
  
-    - return: size string in more human view. For example: 2017-03-31 10:34:51 | March 31, 2017.
+ - maxDirNameLength: max directory name length,
+ 
+ - return: aligned directory name string.
  */
-- (NSString *)stringExtended:(NSArray *)sortedDirs forSortByDate:(YGOptionSortBy)sortBy{
+
++ (NSString *) alignDirNameString:(NSString *)dirName withMaxLength:(NSUInteger)maxDirNameLength{
     
     NSMutableString *resultString = [[NSMutableString alloc] init];
-
-    // getm max dir name in array
-    NSUInteger maxDirNameLength = 0;
-    for(YGDirectory *dir in sortedDirs){
-        if([dir.name length] > maxDirNameLength)
-            maxDirNameLength = [dir.name length];
+    
+    NSUInteger nameGap = maxDirNameLength - [dirName length];
+    
+    if(nameGap > 0){
+        [resultString appendFormat:@"%@", dirName];
+        for(NSUInteger i = nameGap; i > 0; i--)
+            [resultString appendString:@" "];
     }
+    else
+        [resultString appendFormat:@"%@", dirName];
+    
+    return [resultString copy];
+}
+
+
++ (NSString *)stringForDate:(NSDate *)date withLocaleIdentifier:(YGOptionLocaleIdentifier)localIdentifier{
+    
+    NSMutableString *resultString = [[NSMutableString alloc] init];
     
     NSString *dateString = @"";
     NSString *dateStringHumanView = @"";
@@ -98,26 +163,17 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:kPrintVerticalDateFormatSystem];
     
-    for(YGDirectory *dir in sortedDirs){
-        if(sortBy == YGOptionSortByCreated){
-            dateString = [formatter stringFromDate:dir.created];
-            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.created withLocaleIdentifier:self.options.localeIdentifier];
-        }
-        else if(sortBy == YGOptionSortByModified){
-            dateString = [formatter stringFromDate:dir.modified];
-            dateStringHumanView = [YGPrintVertical dateInHumanView:dir.modified withLocaleIdentifier:self.options.localeIdentifier];
-        }
-
-        [resultString appendFormat:@"\n%@%@%@ | %@", \
-         [YGPrintVertical alignDir:dir.name maxDirNameLength:maxDirNameLength], \
-         kPrintVerticalExtendedGap,
-         dateString, \
-         dateStringHumanView];
-    }
+    dateString = [formatter stringFromDate:date];
+    dateStringHumanView = [YGPrintVertical dateInHumanView:date withLocaleIdentifier:localIdentifier];
+    
+    [resultString appendFormat:@"%@ | %@", \
+     dateString, \
+     dateStringHumanView];
     
     return [resultString copy];
-
+    
 }
+
 
 /**
  Transform date in more human view. 2017-03-31 10:34:51 +0000 -> March 31, 2017..
@@ -147,112 +203,15 @@
 }
 
 /**
- Make size string for YGDirectory instance in more human veiw. 15560749240 -> 15'560'749'240 B | 15 GB
- 
-    - sortedDirs: array of sorted directories to get info for align colomns,
- 
-    - return: size string in more human view. For example: 15'560'749'240 B | 15 GB.
- */
-- (NSString *)stringExtendedForSize:(NSArray *)sortedDirs{
-    
-    NSMutableString *resultString = [[NSMutableString alloc] init];
-    
-    NSUInteger maxDirNameLength = 0;
-    NSUInteger maxLocationOfSizeSeparator = 0;
-    //NSUInteger maxSizeLengthToSeparator = 0;
-    
-    // get max directory name and max location of separator
-    for(YGDirectory *dir in sortedDirs){
-        if([dir.name length] > maxDirNameLength)
-            maxDirNameLength = [dir.name length];
-        
-        NSString *size = [NSString stringWithFormat:@"%@", [YGPrintVertical sizeInHumanView:dir.size]];
-        NSRange range = [size rangeOfString:@"|"];
-        NSUInteger i = 0;
-        if(range.location != NSNotFound)
-            i = range.location;
-        
-        if(i > maxLocationOfSizeSeparator)
-            maxLocationOfSizeSeparator = i;
-    }
-    
-    for(YGDirectory *dir in sortedDirs){
-
-        [resultString appendFormat:@"\n%@%@%@", \
-         [YGPrintVertical alignDir:dir.name maxDirNameLength:maxDirNameLength], \
-         kPrintVerticalExtendedGap,
-         [YGPrintVertical alignSize:[YGPrintVertical sizeInHumanView:dir.size] maxLocationOfSizeSeparator:maxLocationOfSizeSeparator]];
-    }
-    
-    return [resultString copy];
-}
-
-/**
- Transform name string of selected directory, to align in nice colomn. Next colomn will have same offset. To short names append spaces.
- 
-    - dirName: size string of selected directory,
- 
-    - maxDirNameLength: max directory name length,
- 
-    - return: aligned directory name string.
- */
-+ (NSString *)alignDir:(NSString *)dirName maxDirNameLength:(NSUInteger)maxDirNameLength{
-    
-    NSMutableString *resultString = [[NSMutableString alloc] init];
-    
-    NSUInteger nameGap = maxDirNameLength - [dirName length];
-    
-    if(nameGap != 0){
-        [resultString appendFormat:@"%@", dirName];
-        for(NSUInteger i = nameGap; i > 0; i--)
-            [resultString appendString:@" "];
-    }
-    else
-        [resultString appendFormat:@"%@", dirName];
-    
-    return [resultString copy];
-}
-
-/**
- Transform size string of selected directory, to align in nice colomn. To short names add spaces.
- 
-    - sizeString: size string of selected directory,
- 
-    - maxSeparatorIndex: max location of separator '|' in string,
- 
-    - return: aligned size string for selected directory.
- */
-+ (NSString *)alignSize:(NSString *)sizeString maxLocationOfSizeSeparator:(NSUInteger)maxLocationOfSizeSeparator {
-    
-    NSMutableString *resultString = [[NSMutableString alloc] init];
-    
-    NSRange range = [sizeString rangeOfString:@"|"];
-    NSUInteger indexGap = 0;
-    
-    if(range.location != NSNotFound){
-        indexGap = maxLocationOfSizeSeparator - range.location;
-    }
-    else{
-        indexGap = maxLocationOfSizeSeparator - 1;
-    }
-    
-    if(indexGap != 0)
-        for(NSUInteger i = indexGap; i > 0; i--)
-            [resultString appendString:@" "];
-
-    [resultString appendFormat:@"%@", sizeString];
-    
-    return [resultString copy];
-}
-
-/**
  Transform size in bytes in more human view. 15560749240 -> 15'560'749'240 B | 15 GB.
  
-    - size: directory contens size in bytes,
-    
-    - return: size in nice, usefull string - 15'560'749'240 B | 15 GB.
+ - size: directory contens size in bytes,
+ 
+ - return: size in nice, usefull string - 15'560'749'240 B | 15 GB.
  */
-+ (NSString *)sizeInHumanView:(NSUInteger)size{
++ (NSString *)stringForSize:(NSUInteger)size{
+    
+    //printf("\n%lu", (unsigned long)size);
     
     NSString *resultString = @"";
     NSUInteger leadNum = 0, trailNum = 0, abbIndex = 0;
@@ -263,18 +222,33 @@
     NSMutableString *stringNum = [[NSMutableString alloc] init];
     NSMutableString *stringNumAll = [[NSMutableString alloc] init];
     
+    
+    NSString *s = [NSString stringWithFormat:@"%lu", size];
+    
+    for(int i = (int)([s length] - 1), j = 1; i >= 0; i--, j++){
+        
+        [stringNumAll insertString:[NSString stringWithFormat:@"%C", [s characterAtIndex:i]] atIndex:0];
+        if(j % 3 == 0 && i != 0){
+            [stringNumAll insertString:@"'" atIndex:0];
+        }
+        
+        
+    }
+    
+    
+    
     do{
         if(size < 1024 && size != 0){
             [stringNum insertString:[NSString stringWithFormat:@"%lu %@", size, abbSize[abbIndex]] atIndex:0];
-            [stringNumAll insertString:[NSString stringWithFormat:@"%lu", size] atIndex:0];
+            //[stringNumAll insertString:[NSString stringWithFormat:@"%lu", size] atIndex:0];
             break;
         }
         else{
             leadNum = size / 1024;
             trailNum = size % 1024;
             
-            if(trailNum != 0)
-                [stringNumAll insertString:[NSString stringWithFormat:@"'%lu", trailNum] atIndex:0];
+            //if(trailNum != 0)
+                //[stringNumAll insertString:[NSString stringWithFormat:@"'%lu", trailNum] atIndex:0];
             
             size = leadNum;
             
@@ -290,5 +264,61 @@
     
     return resultString;
 }
+
+
++ (NSUInteger)maxSizeSeparatorLocation:(NSArray *)dirsSorted{
+
+    NSUInteger maxLocation = 0;
+    
+    for(YGDirectory *dir in dirsSorted){
+        
+        NSString *sizeString = [NSString stringWithFormat:@"%@", [YGPrintVertical stringForSize:dir.size]];
+        NSRange range = [sizeString rangeOfString:@"|"];
+        NSUInteger location = 0;
+        if(range.location != NSNotFound)
+            location = range.location;
+        
+        if(location > maxLocation)
+            maxLocation = location;
+    }
+    
+    return maxLocation;
+}
+
+
+/**************
+ Transform size string of selected directory, to align in nice colomn. To short names add spaces.
+ 
+ - sizeString: size string of selected directory,
+ 
+ - maxSeparatorIndex: max location of separator '|' in string,
+ 
+ - return: aligned size string for selected directory.
+ */
+
++ (NSString *)alignSizeString:(NSString *)sizeString withMaxSizeSeparatorLocation:(NSUInteger)maxSizeSeparatorLocation{
+    
+    NSMutableString *resultString = [[NSMutableString alloc] init];
+    
+    NSRange range = [sizeString rangeOfString:@"|"];
+    NSUInteger indexGap = 0;
+    
+    if(range.location != NSNotFound && maxSizeSeparatorLocation >= range.location){
+        indexGap = maxSizeSeparatorLocation - range.location;
+    }
+    else if(maxSizeSeparatorLocation > 0){
+        indexGap = maxSizeSeparatorLocation - 1;
+    }
+    
+    if(indexGap > 0)
+        for(NSUInteger i = indexGap; i > 0; i--)
+            [resultString appendString:@" "];
+    
+    [resultString appendFormat:@"%@", sizeString];
+    
+    return [resultString copy];
+    
+}
+
 
 @end

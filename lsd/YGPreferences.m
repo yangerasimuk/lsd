@@ -84,6 +84,12 @@
         resultOptions.localeIdentifier = YGOptionLocaleIdentifierRu;
     else if([localeIdentifier compare:@"Extended"] == NSOrderedSame)
         resultOptions.localeIdentifier = YGOptionLocaleIdentifierEn;
+    
+    NSString *showInfo = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowInfo"]];
+    if([showInfo compare:@"Yes"] == NSOrderedSame)
+        resultOptions.showInfo = YGOptionShowInfoYES;
+    else if([showInfo compare:@"No"] == NSOrderedSame)
+        resultOptions.showInfo = YGOptionShowInfoNO;
 
     return resultOptions;
 }
@@ -101,6 +107,7 @@
     [config setValue:@"No" forKey:@"ShowDotted"];
     [config setValue:@"Basic" forKey:@"ShowMode"];
     [config setValue:@"en_EN" forKey:@"LocaleIdentifier"];
+    [config setValue:@"No" forKey:@"ShowInfo"];
 }
 
 @end

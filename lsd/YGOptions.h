@@ -48,6 +48,11 @@ enum YGOptionLocaleIdentifier {
 };
 typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
 
+enum YGOptionShowInfo {
+    YGOptionShowInfoYES,
+    YGOptionShowInfoNO
+};
+typedef enum YGOptionShowInfo YGOptionShowInfo;
 
 @interface YGOptions : NSObject
 
@@ -72,5 +77,8 @@ typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
 
 /// Local identifier to tune date format to more human view
 @property YGOptionLocaleIdentifier localeIdentifier;
+
+/// Show help info about all work option of current launch
+@property YGOptionShowInfo showInfo;
 
 @end
