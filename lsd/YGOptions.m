@@ -8,6 +8,10 @@
 
 #import "YGOptions.h"
 
+@interface YGOptions()
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier showInfo:(YGOptionShowInfo)showInfo addSeparateLine:(YGOptionAddSeparateLine)addSeparateLine;
+@end
+
 @implementation YGOptions
 
 /**
@@ -26,8 +30,11 @@
     - localeIdentifier: locale identifier for more human view of date,
  
     - return: YGOptions instance.
+ 
+    fix
+ 
  */
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier showInfo:(YGOptionShowInfo)showInfo{
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier showInfo:(YGOptionShowInfo)showInfo addSeparateLine:(YGOptionAddSeparateLine)addSeparateLine{
     
     self = [super init];
     if(self){
@@ -38,6 +45,7 @@
         _showMode = showMode;
         _localeIdentifier = localeIdentifier;
         _showInfo = showInfo;
+        _addSeparateLine = addSeparateLine;
     }
     return self;
 }
@@ -55,10 +63,12 @@
  
     - showMode: basic mode without extended info (dates or size),
  
+ fix
+ 
     - return: YGOptions instance.
  */
 - (instancetype)init{
-    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDotted:YGOptionShowDottedNO showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn showInfo:YGOptionShowInfoNO];
+    return [self initWithPrintType:YGOptionPrintTypeVertical sortBy:YGOptionSortByName sortDirection:YGOptionSortDirectionDescending showDotted:YGOptionShowDottedNo showMode:YGOptionShowModeBasic localeIdentifier:YGOptionLocaleIdentifierEn showInfo:YGOptionShowInfoNo addSeparateLine:YGOptionAddSeparateLineYes];
 }
 
 /**
@@ -92,12 +102,11 @@
         [result appendString:@"descending"];
     
     [result appendString:@" | ShowDotted: "];
-    if(_showDotted == YGOptionShowDottedNO)
+    if(_showDotted == YGOptionShowDottedNo)
         [result appendString:@"no"];
-    if(_showDotted == YGOptionShowDottedYES)
+    if(_showDotted == YGOptionShowDottedYes)
         [result appendString:@"yes"];
 
-        
     [result appendString:@" | ShowMode: "];
     if(_showMode == YGOptionShowModeBasic)
         [result appendString:@"basic"];
@@ -111,11 +120,17 @@
         [result appendString:@"en_EN"];
     
     [result appendString:@" | ShowInfo: "];
-    if(_showInfo == YGOptionShowInfoYES)
-        [result appendString:@"Yes"];
-    if(_showInfo == YGOptionShowInfoNO)
-        [result appendString:@"No"];
+    if(_showInfo == YGOptionShowInfoYes)
+        [result appendString:@"yes"];
+    if(_showInfo == YGOptionShowInfoNo)
+        [result appendString:@"no"];
 
+    [result appendString:@" | AddSeparateLine: "];
+    if(_addSeparateLine == YGOptionAddSeparateLineYes)
+        [result appendString:@"yes"];
+    if(_addSeparateLine == YGOptionAddSeparateLineNo)
+        [result appendString:@"no"];
+    
     return [result copy];
 }
 

@@ -13,7 +13,11 @@
 
 @interface YGPrintVertical()
 + (NSUInteger)maxDirNameLength:(NSArray *)dirsSorted;
++ (NSString *) alignDirNameString:(NSString *)dirName withMaxLength:(NSUInteger)maxDirNameLength;
++ (NSString *)dateInHumanView:(NSDate *)date withLocaleIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
++ (NSString *)stringForSize:(NSUInteger)size;
 + (NSUInteger)maxSizeSeparatorLocation:(NSArray *)dirsSorted;
++ (NSString *)alignSizeString:(NSString *)sizeString withMaxSizeSeparatorLocation:(NSUInteger)maxSizeSeparatorLocation;
 @end
 
 @implementation YGPrintVertical
@@ -44,18 +48,6 @@
     
     while(fsObject = [de nextObject]){
         
-        /*
-        NSDictionary *d = [de directoryAttributes];
-        NSArray *keys = [d allKeys];
-        
-        NSLog(@"%@", fsObject);
-        for(id key in keys){
-            NSLog(@"\t%@=%@", key, d[key]);
-        }
-        
-        */
-        
-        
         // do not go in subdirectories
         [de skipDescendants];
         
@@ -64,12 +56,17 @@
             YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:[fm currentDirectoryPath] sortBy:self.options.sortBy];
             
             // skip hidden/dotted files
-            if((self.options.showDotted == YES) || (self.options.showDotted == NO && !dir.isDotted))
+            if((self.options.showDotted == YGOptionShowDottedYes)
+               || (self.options.showDotted == YGOptionShowDottedNo && !dir.isDotted))
                 [dirs addObject:dir];
+            
         }
     }
     
     NSArray *dirsSorted = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
+    
+    // define first element in loop, for nice output
+    int i = 1;
     
     // choice extended or base show mode
     if(self.options.showMode == YGOptionShowModeExtended && self.options.sortBy != YGOptionSortByName){
@@ -87,7 +84,10 @@
                 else if(self.options.sortBy == YGOptionSortByModified)
                     date = dir.modified;
                 
-                printf("\n%s%s%s", \
+                if(i++ > 1)
+                    printf("\n");
+                
+                printf("%s%s%s", \
                        [[YGPrintVertical alignDirNameString:dir.name withMaxLength:maxDirNameLength] UTF8String], \
                        kPrintVerticalExtendedGap, \
                        [[YGPrintVertical stringForDate:date withLocaleIdentifier:self.options.localeIdentifier] UTF8String] \
@@ -99,7 +99,9 @@
             NSUInteger maxSizeSeparatorLocation = [YGPrintVertical maxSizeSeparatorLocation:dirsSorted];
             
             for(YGDirectory *dir in dirsSorted){
-                printf("\n%s%s%s", \
+                if(i++ > 1)
+                    printf("\n");
+                printf("%s%s%s", \
                        [[YGPrintVertical alignDirNameString:dir.name withMaxLength:maxDirNameLength] UTF8String], \
                        kPrintVerticalExtendedGap, \
                        [[YGPrintVertical alignSizeString:[YGPrintVertical stringForSize:dir.size] withMaxSizeSeparatorLocation:maxSizeSeparatorLocation] UTF8String] \
@@ -108,8 +110,11 @@
         }
     }
     else{
-        for(YGDirectory *dir in dirs)
-            printf("\n%s", [dir.name UTF8String]);
+        for(YGDirectory *dir in dirs){
+            if(i++ > 1)
+                printf("\n");
+            printf("%s", [dir.name UTF8String]);
+        }
     }
 }
 
@@ -211,8 +216,6 @@
  */
 + (NSString *)stringForSize:(NSUInteger)size{
     
-    //printf("\n%lu", (unsigned long)size);
-    
     NSString *resultString = @"";
     NSUInteger leadNum = 0, trailNum = 0, abbIndex = 0;
     
@@ -231,11 +234,7 @@
         if(j % 3 == 0 && i != 0){
             [stringNumAll insertString:@"'" atIndex:0];
         }
-        
-        
     }
-    
-    
     
     do{
         if(size < 1024 && size != 0){

@@ -25,9 +25,12 @@ int main(int argc, const char * argv[]) {
             [app defineOptions:[NSString stringWithUTF8String:argv[1]]];
         
 
+        if([app options].addSeparateLine == YGOptionAddSeparateLineYes)
+            printf("\n");
+        
         // print options for testing
-        if([app options].showInfo == YGOptionShowInfoYES)
-            printf("\n%s\n", [[app.options description] UTF8String]);
+        if([app options].showInfo == YGOptionShowInfoYes)
+            printf("%s\n\n", [[app.options description] UTF8String]);
         
         // fabric command creation with options
         id<YGPrinting> command = [YGCommand commandWithOptions:[app options]];
@@ -35,7 +38,9 @@ int main(int argc, const char * argv[]) {
         // result print
         [command print];
         
-        printf("\n\n");
+        if([app options].addSeparateLine == YGOptionAddSeparateLineYes)
+            printf("\n");
+        printf("\n");
     }
     
     return 0;

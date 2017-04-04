@@ -86,7 +86,7 @@
                 _options.sortDirection = YGOptionSortDirectionDescending;
             }
             else if(ch == 'h'){ // hide dotted dirs
-                _options.showDotted = YGOptionShowDottedYES;
+                _options.showDotted = YGOptionShowDottedYes;
             }
             else if(ch == 'b'){ // basic show mode
                 _options.showMode = YGOptionShowModeBasic;
@@ -95,7 +95,7 @@
                 _options.showMode = YGOptionShowModeExtended;
             }
             else if(ch == 'i'){ // show actual options info
-                _options.showInfo = YGOptionShowInfoYES;
+                _options.showInfo = YGOptionShowInfoYes;
             }
         }
     }

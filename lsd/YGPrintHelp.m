@@ -29,7 +29,7 @@
  */
 - (void)print{
     
-    printf("\nlsd. List directories macOS app. Version: %s, build %s. %s", kLsdVersion, kLsdBuild, kLsdAuthor);
+    printf("lsd. List directories for macOS app. Version: %s, build %s. %s", kLsdVersion, kLsdBuild, kLsdAuthor);
     printf("\nUsage: lsd -[lv?adncmsbeh] \
            \n\tl - print directories in line (default), \
            \n\tv - print directories in vertical colomn, \

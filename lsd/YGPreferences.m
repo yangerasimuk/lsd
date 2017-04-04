@@ -69,9 +69,9 @@
     
     NSString *showDotted = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowDotted"]];
     if([showDotted compare:@"Yes"] == NSOrderedSame)
-        resultOptions.showDotted = YGOptionShowDottedYES;
+        resultOptions.showDotted = YGOptionShowDottedYes;
     else if([showDotted compare:@"No"] == NSOrderedSame)
-        resultOptions.showDotted = YGOptionShowDottedNO;
+        resultOptions.showDotted = YGOptionShowDottedNo;
 
     NSString *showMode = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowMode"]];
     if([showMode compare:@"Basic"] == NSOrderedSame)
@@ -87,10 +87,16 @@
     
     NSString *showInfo = [NSString stringWithFormat:@"%@", [config valueForKey:@"ShowInfo"]];
     if([showInfo compare:@"Yes"] == NSOrderedSame)
-        resultOptions.showInfo = YGOptionShowInfoYES;
+        resultOptions.showInfo = YGOptionShowInfoYes;
     else if([showInfo compare:@"No"] == NSOrderedSame)
-        resultOptions.showInfo = YGOptionShowInfoNO;
+        resultOptions.showInfo = YGOptionShowInfoNo;
 
+    NSString *addSeparateLine = [NSString stringWithFormat:@"%@", [config valueForKey:@"AddSeparateLine"]];
+    if([addSeparateLine compare:@"Yes"] == NSOrderedSame)
+        resultOptions.addSeparateLine = YGOptionAddSeparateLineYes;
+    else if([addSeparateLine compare:@"No"] == NSOrderedSame)
+        resultOptions.addSeparateLine = YGOptionAddSeparateLineNo;
+    
     return resultOptions;
 }
 
@@ -108,6 +114,7 @@
     [config setValue:@"Basic" forKey:@"ShowMode"];
     [config setValue:@"en_EN" forKey:@"LocaleIdentifier"];
     [config setValue:@"No" forKey:@"ShowInfo"];
+    [config setValue:@"Yes" forKey:@"AddSeparateLine"];
 }
 
 @end

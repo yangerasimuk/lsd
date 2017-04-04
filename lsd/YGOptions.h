@@ -20,7 +20,6 @@ enum YGOptionSortBy {
     YGOptionSortByCreated,
     YGOptionSortByModified,
     YGOptionSortBySize
-    
 };
 typedef enum YGOptionSortBy YGOptionSortBy;
 
@@ -31,8 +30,8 @@ enum YGOptionSortDirection {
 typedef enum YGOptionSortDirection YGOptionSortDirection;
 
 enum YGOptionShowDotted{
-    YGOptionShowDottedNO,
-    YGOptionShowDottedYES
+    YGOptionShowDottedYes,
+    YGOptionShowDottedNo
 };
 typedef enum YGOptionShowDotted YGOptionShowDotted;
 
@@ -49,14 +48,20 @@ enum YGOptionLocaleIdentifier {
 typedef enum YGOptionLocaleIdentifier YGOptionLocaleIdentifier;
 
 enum YGOptionShowInfo {
-    YGOptionShowInfoYES,
-    YGOptionShowInfoNO
+    YGOptionShowInfoYes,
+    YGOptionShowInfoNo
 };
 typedef enum YGOptionShowInfo YGOptionShowInfo;
 
+enum YGOptionAddSeparateLine {
+    YGOptionAddSeparateLineYes,
+    YGOptionAddSeparateLineNo
+};
+typedef enum YGOptionAddSeparateLine YGOptionAddSeparateLine;
+
 @interface YGOptions : NSObject
 
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier;
+- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier addSeparateLine:(YGOptionAddSeparateLine)addSeparateLine;
 
 - (NSString *)description;
 
@@ -80,5 +85,8 @@ typedef enum YGOptionShowInfo YGOptionShowInfo;
 
 /// Show help info about all work option of current launch
 @property YGOptionShowInfo showInfo;
+
+/// Add separate new line to more usefull output
+@property YGOptionAddSeparateLine addSeparateLine;
 
 @end

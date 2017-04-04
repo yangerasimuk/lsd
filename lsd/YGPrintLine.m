@@ -48,14 +48,15 @@
             YGDirectory *dir = [[YGDirectory alloc] initWithName:fsObject atPath:curDir sortBy:self.options.sortBy];
             
             // show hidden/dotted directories?
-            if((self.options.showDotted == YES) || (self.options.showDotted == NO && !dir.isDotted))
+            if((self.options.showDotted == YGOptionShowDottedYes)
+               || (self.options.showDotted == YGOptionShowDottedNo && !dir.isDotted))
                 [dirs addObject:dir];
         }
     }
     
     NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
     
-    printf("\n");
+    //printf("\n");
     for(YGDirectory *dir in sortedDirs){
         printf(kPrintLineGap, [dir.name UTF8String]);
     }
