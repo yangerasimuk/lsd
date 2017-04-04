@@ -61,8 +61,6 @@ typedef enum YGOptionAddSeparateLine YGOptionAddSeparateLine;
 
 @interface YGOptions : NSObject
 
-- (instancetype)initWithPrintType:(YGOptionPrintType)printType sortBy:(YGOptionSortBy)sortBy sortDirection:(YGOptionSortDirection)sortDireciton showDotted:(YGOptionShowDotted)showDotted showMode:(YGOptionShowMode)showMode localeIdentifier:(YGOptionLocaleIdentifier)localeIdentifier addSeparateLine:(YGOptionAddSeparateLine)addSeparateLine;
-
 - (NSString *)description;
 
 /// Type of print: in line or in colomn

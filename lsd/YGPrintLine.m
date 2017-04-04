@@ -54,6 +54,11 @@
         }
     }
     
+    if([dirs count] == 0){
+        printf("No files...");
+        return;
+    }
+    
     NSArray *sortedDirs = [NSArray arrayWithArray:[YGDirectorySorter sort:dirs byOrder:self.options.sortBy inDirection:self.options.sortDirection]];
     
     //printf("\n");
