@@ -1,47 +1,48 @@
-# lsd - list of directories in current one
+# lsd
+Список директорий для текущей.
 
-## Problem
-I like use console, but in some cases I became unhappy. For example, I enter in folder with many files/folders and traditional command _ls_ do not let me simple way to get list of directories only. I know about _ls -d */_, _du -sh */_ etc., but it's not suits for me.
+## Проблема
+Неудобство использования традиционной программы _ls_ для работы только с папками. Команды _ls -d */_, _du -sh */_ и т.д, выдают мне не очень удобный список.
 
-## Decision
-Make console app (for macOS in my case), for listing directories in more usefull form with follow options: list or vertical colomn, sort by name, creation date, modification date and size, ascending or descending sort direction, show date or size or not, show hidden directories or not.
+## Решение
+Создать консольную программу для macOS, аналог _ls_, но выводящую список директорий в удобном виде: список или колонка, сортировка по имени, дате создания, дате модификации или размеру, направление сортировки, по убыванию и по возрастанию, а также работа в расширенном режиме, с отображением даты и размера конкретной директории.
 
-## Setup
-To make app work in any folder - place app in one of the folders availible through path environments. I prefer _/usr/local/bin_. Building process of XCode project copy executive file in _/usr/local/bin_ automaticaly.
+## Установка
+Для работы в любой доступной директории программа должна находится в одной из общедоступных через переменные окружения папки. Я предпочитаю _/usr/local/bin_. При компиляции проекта в XCode, исполняемый файл копируется в _/usr/local/bin_ автоматически.
 
-## Usage
-Open console (Terminal.app) and enter _lsd_. By default you get list of directories in one colomn with sort by directory name in descend direction, hidden (with leading dot) directories will not show.
+## Использование
+Для запуска откройте Terminal и введите lsd. В режиме по-умолчанию будет выведен список директорий в одну колонку с сортировкой по имени директории, в направлении по убыванию, скрытые директории (с точкой вначале) выведены не будут.
 
-To launch app in other mode use follow options:
-* -l    // print directories in line (by default),
-* -v    // print directories in vertical colomn,
-* -?    // print help,
-* -a    // ascending sort,
-* -d    // descending sort (by default),
-* -n    // sort by name (by default),
-* -c    // sort by created date,
-* -m    // sort by modified date,
-* -s    // sort by size (attention! may spend a long time),
-* -b    // basic show mode (by default, only directory name),
-* -e    // extended show mode (more info about date or size),
-* -h    // show hidden (with leading dot) directories.
+Для запуска в других режимах введите lsd и одну или несколько следующих опций:
+* -l    // печать директорий в линию (по умолчанию),
+* -v    // печать директорий в колонку,
+* -?    // печать справки,
+* -a    // сортировка по убыванию,
+* -d    // сортировка по возрастанию,
+* -n    // сортировка по имени (по умолчанию),
+* -c    // сортировка по дате создания,
+* -m    // сортировка по дате модификации,
+* -s    // сортировка по размеру (внимание! расчет может занять время),
+* -b    // базовый режим вывода (только имя директории),
+* -e    // расширенный режим вывода (больше информации о дате или размере),
+* -h    // показ скрытых (с точкой вначале) директорий.
 
-Example:
+Например:
 
-lsd -vme   // list directories in vertical colomn with sort by modification date in descend direction, show in extended mode,
-lsd -vsae   // list directories in vertical colomn with sort by size in ascend direction, show in extended mode.
+lsd -vme   // вывод директорий в колонку с сортировкой по дате модификации по убыванию в расширенном режиме,
+lsd -vsae   // вывод директорий в колонку с сортировкой по размеру директории по возрастанию, в расширенном режиме.
 
-## Config
-You can edit default mode of app launching. Options stored in config xml file - _~/lsd.config.xml_.
+## Конфигурация
+При запуске программы без параметров, используются настройки по-умолчанию, их можно изменить редактированием конфигурационного файла _~/lsd.config.xml_.
 
-## Performance
-App is very small and quick, but if it work with sort by size - process of calc file sizes will may get long time.
+## Производительность
+Программа очень маленькая и работает быстро, но её быстродействие зависит от объемов данных пользователя при работе в режиме сортировки по размеру.
 
-## Notes
-App calculate only file size, while size on disk may be different. There are different methods of calculation: several system functions to compute directory size, include or not empty directories, different "sizes" of packages. In that way total size output by app may differ from size shown in Finder. Differences is very small, but may be exists.
+## Замечания
+Вычисляется только длина файлов, а не занимаемый ими размер на диске. Также можно по разному считать размер самих директорий, учитывать или нет пустые директории, разными способами считать пакеты (packages), поэтому итоговая сумма размеров может отличаться от таковой показываемой в программе Finder. Различия незначительны.
 
 gl hf
 
-April, 3 2017
+3 апреля 2017 г.
 
-Yan Gerasimuk
+Ян Герасимук
